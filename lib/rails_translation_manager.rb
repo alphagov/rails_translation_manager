@@ -1,5 +1,7 @@
 require "rails_translation_manager/version"
+require "rails_translation_manager/railtie" if defined?(Rails)
 
 module RailsTranslationManager
-  # Your code goes here...
+  autoload :Exporter, "rails_translation_manager/exporter"
+  autoload :Importer, "rails_translation_manager/importer"
 end
