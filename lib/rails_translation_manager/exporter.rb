@@ -2,6 +2,8 @@
 require "yaml"
 require "csv"
 require 'i18n'
+require "active_support/core_ext/object/blank"
+require "active_support/core_ext/hash/keys.rb"
 
 class RailsTranslationManager::Exporter
   def initialize(directory, source_locale_path, target_locale_path)
