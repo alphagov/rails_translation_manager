@@ -75,8 +75,15 @@ class RailsTranslationManager::Exporter
   # (see https://github.com/svenfuchs/i18n/blob/master/lib/i18n/backend/pluralization.rb#L34)
   def hash_is_for_pluralization?(hash, locale)
     plural_keys = I18n.t('i18n.plural.keys', locale: locale)
-    raise "No pluralization forms defined for #{locale}" unless plural_keys.is_a?(Array)
+    raise missing_pluralisations_message(locale) unless plural_keys.is_a?(Array)
     ((hash.keys.map(&:to_s) - plural_keys.map(&:to_s)) - ['zero']).empty?
+  end
+
+  def missing_pluralisations_message(locale)
+    "No pluralization forms defined for locale '#{locale}'. " +
+    "This probably means that the rails-18n gem does not provide a " +
+    "definition of the plural forms for this locale, you may need to " +
+    "define them yourself."
   end
 
   def key_for(prefix, key)
