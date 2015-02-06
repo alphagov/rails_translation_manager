@@ -1,4 +1,5 @@
 require 'yaml'
+require 'logger'
 
 class RailsTranslationManager::Validator
   def initialize(translation_file_path, logger = Logger.new(nil))
