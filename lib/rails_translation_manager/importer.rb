@@ -1,3 +1,6 @@
+require "yaml"
+require "csv"
+
 class RailsTranslationManager::Importer
   def initialize(locale, csv_path, import_directory)
     @csv_path = csv_path
