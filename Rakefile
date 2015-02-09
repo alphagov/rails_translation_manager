@@ -9,4 +9,10 @@ Rake::TestTask.new("test") do |t|
   t.verbose = true
 end
 
+require "gem_publisher"
+task :publish_gem do |t|
+  gem = GemPublisher.publish_if_updated("rails_translation_manager.gemspec", :rubygems)
+  puts "Published #{gem}" if gem
+end
+
 task :default => :test
