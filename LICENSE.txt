@@ -1,5 +1,5 @@
 The MIT License (MIT)
-Copyright (C) 2015 HM Government (Government Digital Service)
+Copyright (C) 2015 Crown Copyright (Government Digital Service)
 
 MIT License
 
