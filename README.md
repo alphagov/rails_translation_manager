@@ -124,6 +124,48 @@ $ rake translation:validate
 Success! No unexpected interpolation keys found.
 ```
 
+### Stealing translations from another app
+
+A third feature is the ability to "steal" one or more locales from an existing
+application. This functionality works by providing a mapping file, which defines
+how the translation keys in the the source app's files map to those in the app
+the gem is installed in.
+
+For example, given a locale file like this in the app to "steal" from:
+
+```yaml
+es:
+  document:
+    type:
+      case_study: Caso de estudio
+      consultation: Consulta
+```
+
+and a mapping file like this:
+
+```yaml
+document.type: content_item.format
+```
+
+running `rake translation:steal[es,../other_app,mapping_file_path.yml]` will
+result in the following locale file being created:
+
+```yaml
+es:
+  content_item:
+    format:
+      case_study: Caso de estudio
+      consultation: Consulta
+```
+
+The mapping file can live anywhere, as long as the full path (including filename)
+is given in the rake task invocation.
+
+The process will preserve data already in the output file if it is not
+referenced in the mapping, but will always override data belonging to keys
+that are in the mapping.
+
+
 ### Rake command reference
 
 #### Export a specific locale to CSV
@@ -150,6 +192,8 @@ rake translation:import[locale,path]
 rake translation:import:all[directory]
 ```
 
+#### 
+
 #### Regenerate all locales from the EN locale - run this after adding keys
 
 ```
@@ -160,6 +204,18 @@ rake translation:regenerate[directory]
 
 ```
 rake translation:validate
+```
+
+#### Steal a specific locale file from another app
+
+```
+rake translation:steal[locale,source_app_path,mapping_file_path]
+```
+
+#### Steal all locale files from another app
+
+```
+rake translation:steal:all[source_app_path,mapping_file_path]
 ```
 
 ### Running the test suite
