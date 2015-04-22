@@ -1,7 +1,10 @@
 require "yaml"
 require "csv"
+require_relative "yaml_writer"
 
 class RailsTranslationManager::Importer
+  include YAMLWriter
+
   def initialize(locale, csv_path, import_directory)
     @csv_path = csv_path
     @locale = locale
@@ -25,12 +28,7 @@ class RailsTranslationManager::Importer
       end
     end
 
-    File.open(import_yml_path, "w") do |f|
-      yaml = {@locale.to_s => data}.to_yaml(separator: "")
-      yaml_without_header = yaml.split("\n").map { |l| l.gsub(/\s+$/, '') }[1..-1].join("\n")
-      f.write(yaml_without_header)
-      f.puts
-    end
+    write_yaml(import_yml_path, {@locale.to_s => data})
   end
 
   private

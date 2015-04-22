@@ -32,40 +32,6 @@ module RailsTranslationManager
       assert_equal expected, yaml_translation_data
     end
 
-    test 'outputs YAML without the header --- line for consistency with convention' do
-      given_csv(:fr,
-        [:key, :source, :translation],
-        ["key", "value", "le value"],
-      )
-
-      Importer.new(:fr, csv_path(:fr), import_directory).import
-
-      assert_equal "fr:", File.readlines(File.join(import_directory, "fr.yml")).first.strip
-    end
-
-    test 'outputs a newline at the end of the YAML for consistency with code editors' do
-      given_csv(:fr,
-        [:key, :source, :translation],
-        ["key", "value", "le value"],
-      )
-
-      Importer.new(:fr, csv_path(:fr), import_directory).import
-
-      assert_match /\n$/, File.readlines(File.join(import_directory, "fr.yml")).last
-    end
-
-    test 'strips whitespace from the end of lines for consistency with code editors' do
-      given_csv(:fr,
-        [:key, :source, :translation],
-        ["key", "value", nil],
-      )
-
-      Importer.new(:fr, csv_path(:fr), import_directory).import
-
-      lines = File.readlines(File.join(import_directory, "fr.yml"))
-      refute lines.any? { |line| line =~ /\s\n$/ }
-    end
-
     test 'imports arrays from CSV as arrays' do
       given_csv(:fr,
         [:key, :source, :translation],
