@@ -14,7 +14,7 @@ Support for translation workflow in rails applications.
                      into a translated string of text, for example `Hello %{name}`
                      would become `Hello Sarah` if the variable `name` had the
                      value `Sarah`.
-- **YAML**: yet another markup language, a textual data format used for storing
+- **YAML**: YAML Ain't Markup Language, a textual data format used (in this case) for storing
             translation strings in rails applications
 
 ## Technical documentation
