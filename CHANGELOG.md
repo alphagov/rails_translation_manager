@@ -1,4 +1,4 @@
-## Unreleased
+## 0.1.0
 
 Don't change the $LOAD_PATH in translation.rake.
 
