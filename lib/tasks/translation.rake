@@ -1,4 +1,3 @@
-$LOAD_PATH.unshift(File.expand_path("../.."), __FILE__)
 require "rails_translation_manager"
 
 namespace :translation do
