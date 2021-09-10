@@ -7,7 +7,8 @@
   "es-419": { i18n: { plural: { keys: %i[one other], rule: ->(n) { n == 1 ? :one : :other } } } },
   # Scottish Gaelic
   gd: { i18n: { plural: { keys: %i[one two few other],
-                          rule: lambda do |n|
+                          rule:
+                          lambda do |n|
                             if [1, 11].include?(n)
                               :one
                             elsif [2, 12].include?(n)
