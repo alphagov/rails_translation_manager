@@ -1,0 +1,8 @@
+---
+cy:
+  in_sync:
+    key: food
+    second_key: cat
+  some_plurals:
+    one:
+    other:
