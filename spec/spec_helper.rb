@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails_translation_manager"
+require 'rails_translation_manager'
 
 RSpec.configure do |config|
   config.before do
