@@ -1,17 +1,8 @@
 # frozen_string_literal: true
 
-<<<<<<< HEAD
 require "rails_translation_manager/version"
 require "rails_translation_manager/railtie" if defined?(Rails)
 require "rails-i18n"
-=======
-require 'rails_translation_manager/version'
-require 'rails_translation_manager/railtie' if defined?(Rails)
-require 'rails-i18n'
-
-require 'rails_translation_manager/locale_checker/locale_checker_helper'
-<<<<<<< HEAD
->>>>>>> be3c48c (Add locale checker helper)
 
 require 'rails_translation_manager/locale_checker/base_checker'
 require 'rails_translation_manager/locale_checker/locale_checker_helper'
@@ -21,10 +12,6 @@ require 'rails_translation_manager/locale_checker/plural_forms'
 require 'rails_translation_manager/locale_checker/incompatible_plurals'
 require 'rails_translation_manager/locale_checker/all_locales'
 require 'rails_translation_manager/locale_checker'
-=======
-require 'rails_translation_manager/locale_checker/missing_foreign_locales'
-require 'rails_translation_manager/locale_checker/missing_english_locales'
->>>>>>> bb4daa2 (Add classes to check for missing locales)
 
 module RailsTranslationManager
   autoload :Exporter, "rails_translation_manager/exporter"
