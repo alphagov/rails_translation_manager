@@ -1,42 +1,34 @@
 # frozen_string_literal: true
 
-class IncompatiblePlurals < BaseChecker
+class IncompatiblePlurals
   include LocaleCheckerHelper
 
+  attr_reader :all_locales
+
+  def initialize(all_locales)
+    @all_locales = all_locales
+  end
+
   def report
-    format_incompatible_plurals if incompatible_plurals.present?
+    "\e[31m[ERROR]\e[0m Incompatible plural forms, for:\n\n#{incompatible_plurals.join("\n\n")}" if incompatible_plurals.present?
   end
 
   private
-
-  def format_incompatible_plurals
-    <<~OUTPUT.chomp
-      \e[31m[ERROR]\e[0m Incompatible plural forms, for:
-
-      #{incompatible_plurals.join("\n\n")}
-
-      #{non_plural_keys_message}
-    OUTPUT
-  end
 
   def incompatible_plurals
     @incompatible_plurals ||= grouped_plural_keys_for_locale.flat_map do |plural_keys_for_locale|
       locale = plural_keys_for_locale[:locale]
 
       if all_plural_forms[locale].blank?
-        missing_plural_form_message(locale)
+        missing_plural_form(locale)
       else
         missing_plural_keys(plural_keys_for_locale).compact
       end
     end
   end
 
-  def missing_plural_form_message(locale)
+  def missing_plural_form(locale)
     "- \e[31m[ERROR]\e[0m Please add plural form for '#{locale}' <link to future documentation>"
-  end
-
-  def non_plural_keys_message
-    "\e[1mIf the keys reported above are not plurals, rename them avoiding plural keywords: #{PLURAL_KEYS}\e[22m"
   end
 
   def missing_plural_keys(plural_keys_for_locale)
@@ -55,31 +47,40 @@ class IncompatiblePlurals < BaseChecker
     all_locales.map do |locale|
       {
         locale: locale[:locale],
-        grouped_plurals: grouped_plural_keys(only_plurals(locale[:keys]), locale[:locale])
+        grouped_plurals: grouped_plural_keys(locale[:keys], locale[:locale]).compact
       }
     end
   end
 
   def grouped_plural_keys(keys, _locale)
-    group_by_parent_keys(keys).map do |plural_key_group|
+    plural_key_groups = keys.group_by do |key|
+      key.split('.')[0..-2].join('.')
+    end
+
+    plural_key_groups.map do |plural_key_group|
+      # Exclude non-plural groups
+      next if exclude_plurals(plural_key_group.last).present?
+
       {
         parent: plural_key_group.first,
-        keys: plural_key_group.last.map { |key_chain| key_chain.split(".").last.to_sym }
+        keys: plural_key_group.last.map { |key_chain| key_chain.split('.').last.to_sym }
       }
     end
   end
 
-  def group_by_parent_keys(keys)
-    keys.group_by do |key|
-      key.split('.')[0..-2].join('.')
-    end
-  end
-
   def only_plurals(keys)
-    keys.select { |key| key_is_plural?(key) }
+    keys.select { |key| key.end_with?('.zero', '.one', '.two', '.few', '.many', '.other') }
   end
 
   def all_plural_forms
-    @all_plural_forms ||= PluralForms.all
+    @all_plural_forms ||= I18n.available_locales.each_with_object({}) do |locale, hsh|
+      hsh[locale.downcase] = plural_form(locale)
+    end
+  end
+
+  def plural_form(locale)
+    I18n.with_locale(locale) { I18n.t!('i18n.plural.keys') }.sort
+  rescue I18n::MissingTranslationData
+    nil
   end
 end

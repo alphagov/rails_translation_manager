@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require 'spec_helper'
 
 RSpec.describe IncompatiblePlurals do
-  context "when there are missing plurals" do
+  context 'when there are missing plurals' do
     let(:all_locales) do
       [
         {
@@ -13,11 +13,7 @@ RSpec.describe IncompatiblePlurals do
       ]
     end
 
-    before do
-      allow(PluralForms).to receive(:all).and_return({ en: %i[one other] })
-    end
-
-    it "returns the missing plural forms" do
+    it 'returns the missing plural forms' do
       expect(described_class.new(all_locales).report)
         .to eq(
           <<~OUTPUT.chomp
@@ -26,8 +22,6 @@ RSpec.describe IncompatiblePlurals do
             - 'en', with parent 'browse.some_key'. Expected: [:one, :other], actual: [:other]
 
             - 'en', with parent 'browse.some_other_key'. Expected: [:one, :other], actual: [:one]
-
-            \e[1mIf the keys reported above are not plurals, rename them avoiding plural keywords: #{LocaleCheckerHelper::PLURAL_KEYS}\e[22m
           OUTPUT
         )
     end
@@ -43,11 +37,7 @@ RSpec.describe IncompatiblePlurals do
       ]
     end
 
-    before do
-      allow(PluralForms).to receive(:all).and_return({ en: %i[one other] })
-    end
-
-    it "returns nil" do
+    it 'returns nil' do
       expect(described_class.new(all_locales).report)
         .to be_nil
     end
@@ -58,25 +48,25 @@ RSpec.describe IncompatiblePlurals do
       [
         {
           locale: :en,
-          keys: %w[browse.some_key.one browse.some_key.other]
+          keys: %w[browse.some_key.other]
         },
         {
           locale: :cy,
-          keys: %w[browse.some_key.few
-                   browse.some_key.many
-                   browse.some_key.one
-                   browse.some_key.other
-                   browse.some_key.two
-                   browse.some_key.zero]
+          keys: %w[browse.some_key.other]
         }
       ]
     end
 
-    before do
-      allow(PluralForms).to receive(:all).and_return({ cy: nil, en: nil })
+    around do |example|
+      load_path = I18n.load_path
+      I18n.load_path = I18n.load_path.flatten.reject { |path| path =~ /plural/ }
+
+      example.run
+
+      I18n.load_path = load_path
     end
 
-    it "outputs the missing plural forms" do
+    it 'outputs the missing plural forms' do
       expect(described_class.new(all_locales).report)
         .to eq(
           <<~OUTPUT.chomp
@@ -85,10 +75,24 @@ RSpec.describe IncompatiblePlurals do
             - \e[31m[ERROR]\e[0m Please add plural form for 'en' <link to future documentation>
 
             - \e[31m[ERROR]\e[0m Please add plural form for 'cy' <link to future documentation>
-
-            \e[1mIf the keys reported above are not plurals, rename them avoiding plural keywords: #{LocaleCheckerHelper::PLURAL_KEYS}\e[22m
           OUTPUT
         )
+    end
+  end
+
+  context 'when there are lookalike plural key groups' do
+    let(:all_locales) do
+      [
+        {
+          locale: :en,
+          keys: %w[browse.some_key.other browse.some_key.fake_plural]
+        }
+      ]
+    end
+
+    it 'ignores them' do
+      expect(described_class.new(all_locales).report)
+        .to be_nil
     end
   end
 end
