@@ -1,0 +1,12 @@
+---
+cy:
+  in_sync:
+    key: bwyd
+    second_key: cath
+  some_plurals:
+    few:
+    many:
+    one:
+    other:
+    two:
+    zero:
