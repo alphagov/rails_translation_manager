@@ -9,6 +9,7 @@ require 'rails_translation_manager/locale_checker/locale_checker_helper'
 require 'rails_translation_manager/locale_checker/missing_foreign_locales'
 require 'rails_translation_manager/locale_checker/missing_english_locales'
 require 'rails_translation_manager/locale_checker/incompatible_plurals'
+require 'rails_translation_manager/locale_checker'
 
 module RailsTranslationManager
   autoload :Exporter, "rails_translation_manager/exporter"
