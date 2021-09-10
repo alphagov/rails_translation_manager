@@ -13,4 +13,12 @@ module RailsTranslationManager
   autoload :Exporter, "rails_translation_manager/exporter"
   autoload :Importer, "rails_translation_manager/importer"
   autoload :Stealer, "rails_translation_manager/stealer"
+
+  rails_i18n_path = Gem::Specification.find_by_name("rails-i18n").gem_dir
+  rails_translation_manager = Gem::Specification.find_by_name("rails_translation_manager").gem_dir
+
+  I18n.load_path.concat(
+    Dir["#{rails_i18n_path}/rails/pluralization/*.rb"],
+    ["#{rails_translation_manager}/config/locales/plurals.rb"]
+  )
 end
