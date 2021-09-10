@@ -1,7 +1,13 @@
 # frozen_string_literal: true
 
-class MissingForeignLocales < BaseChecker
+class MissingForeignLocales
   include LocaleCheckerHelper
+
+  attr_reader :all_locales
+
+  def initialize(all_locales)
+    @all_locales = all_locales
+  end
 
   def report
     grouped_missing_keys = group_keys(missing_foreign_locales)
