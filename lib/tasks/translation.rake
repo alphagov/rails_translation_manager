@@ -1,4 +1,5 @@
 require "rails_translation_manager"
+require "i18n/tasks/cli"
 
 namespace :translation do
 
@@ -83,4 +84,19 @@ namespace :translation do
     end
   end
 
+  desc "Add missing translations"
+  task(:add_missing, [:locale] => [:environment]) do |t, args|
+    locale = args[:locale] || "en"
+    require 'i18n/tasks/cli'
+
+    I18n::Tasks::CLI.start(["add-missing", "-l", locale])
+  end
+
+  desc "Normalize translations"
+  task(:normalize, [:locale] => [:environment]) do |t, args|
+    locale = args[:locale] || "en"
+    require 'i18n/tasks/cli'
+
+    I18n::Tasks::CLI.start(["normalize", "-l", locale])
+  end
 end
