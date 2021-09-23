@@ -86,15 +86,17 @@ namespace :translation do
 
   desc "Add missing translations"
   task(:add_missing, [:locale] => [:environment]) do |t, args|
-    locale = args[:locale] || "en"
+    locale = args[:locale]
 
-    I18n::Tasks::CLI.start(["add-missing", "-l", locale])
+    i18n_args = ["add-missing", "--nil-value"]
+    i18n_args << ["-l", locale] if locale
+    I18n::Tasks::CLI.start(i18n_args.flatten)
   end
 
   desc "Normalize translations"
   task(:normalize, [:locale] => [:environment]) do |t, args|
-    locale = args[:locale] || "en"
+    locale = args[:locale]
 
-    I18n::Tasks::CLI.start(["normalize", "-l", locale])
+    locale ? I18n::Tasks::CLI.start(["normalize", "-l", locale]) : I18n::Tasks::CLI.start(["normalize"])
   end
 end
