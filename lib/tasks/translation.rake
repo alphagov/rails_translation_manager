@@ -90,7 +90,9 @@ namespace :translation do
 
     i18n_args = ["add-missing", "--nil-value"]
     i18n_args << ["-l", locale] if locale
+
     I18n::Tasks::CLI.start(i18n_args.flatten)
+    RailsTranslationManager::Cleaner.new(Rails.root.join("config", "locales")).clean
   end
 
   desc "Normalize translations"
@@ -98,5 +100,6 @@ namespace :translation do
     locale = args[:locale]
 
     locale ? I18n::Tasks::CLI.start(["normalize", "-l", locale]) : I18n::Tasks::CLI.start(["normalize"])
+    RailsTranslationManager::Cleaner.new(Rails.root.join("config", "locales")).clean
   end
 end
