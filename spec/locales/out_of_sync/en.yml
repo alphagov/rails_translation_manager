@@ -1,0 +1,6 @@
+---
+en:
+  test: key
+  wrong_plural:
+    one: correct
+    zero: failure
