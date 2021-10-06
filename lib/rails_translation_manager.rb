@@ -12,6 +12,7 @@ require "rails_translation_manager/locale_checker/plural_forms"
 require "rails_translation_manager/locale_checker/incompatible_plurals"
 require "rails_translation_manager/locale_checker/all_locales"
 require "rails_translation_manager/locale_checker"
+require "rails_translation_manager/cleaner"
 
 module RailsTranslationManager
   autoload :Exporter, "rails_translation_manager/exporter"
