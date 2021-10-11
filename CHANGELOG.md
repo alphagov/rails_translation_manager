@@ -1,4 +1,4 @@
-## unreleased
+## 1.0.0
 
 Adds logic to verify locale files are in sync with each other and have the
 correct plural forms. Also introduces RSpec into the Gem which will replace
