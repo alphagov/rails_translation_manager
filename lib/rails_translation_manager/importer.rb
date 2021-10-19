@@ -7,7 +7,7 @@ class RailsTranslationManager::Importer
 
   attr_reader :locale, :csv_path, :import_directory
 
-  def initialize(locale, csv_path, import_directory)
+  def initialize(locale:, csv_path:, import_directory:)
     @locale = locale
     @csv_path = csv_path
     @import_directory = import_directory

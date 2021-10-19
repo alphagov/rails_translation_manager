@@ -38,20 +38,30 @@ namespace :translation do
   end
 
   desc "Import a specific locale CSV to YAML within the app."
-  task :import, [:locale, :path] => [:environment] do |t, args|
-    importer = RailsTranslationManager::Importer.new(args[:locale], args[:path], Rails.root.join("config", "locales"))
+  task :import, [:csv_path, :import_directory] => [:environment] do |t, args|
+    locale = File.basename(args[:csv_path], ".csv")
+    importer = RailsTranslationManager::Importer.new(
+      locale: locale, csv_path: args[:csv_path], import_directory: args[:import_directory]
+    )
     importer.import
+
+    puts "Imported CSV from: #{args[:csv_path]} to #{args[:import_directory]}"
   end
 
   namespace :import do
     desc "Import all locale CSV files to YAML within the app."
-    task :all, [:directory] => [:environment] do |t, args|
-      directory = args[:directory] || "tmp/locale_csv"
+    task :all, [:csv_directory, :import_directory] => [:environment] do |t, args|
+      directory = args[:csv_directory] || "tmp/locale_csv"
+
       Dir[File.join(directory, "*.csv")].each do |csv_path|
         locale = File.basename(csv_path, ".csv")
-        importer = RailsTranslationManager::Importer.new(locale, csv_path, Rails.root.join("config", "locales"))
+        importer = RailsTranslationManager::Importer.new(
+          locale: locale, csv_path: csv_path, import_directory: args[:import_directory]
+        )
         importer.import
       end
+
+      puts "Imported all CSVs from: #{directory} to #{args[:import_directory]}"
     end
   end
 
