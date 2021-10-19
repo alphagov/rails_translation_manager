@@ -1,0 +1,8 @@
+key,source,translation
+world_location.type.country,Country,Pays
+world_location.fruit,"[Apples, Bananas, Pears]","[Pommes, Bananes, Poires]"
+world_location.things,nil,nil
+world_location.sentiment,:whatever,:bof
+shared.price,123,123
+shared.key1,is true,true
+shared.key2,is false,false
