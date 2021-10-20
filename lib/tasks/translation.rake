@@ -38,14 +38,15 @@ namespace :translation do
   end
 
   desc "Import a specific locale CSV to YAML within the app."
-  task :import, [:csv_path] => [:environment] do |t, args|
+  task :import, [:csv_path, :nested] => [:environment] do |t, args|
     import_dir = Rails.root.join("config", "locales")
     csv_path = args[:csv_path]
 
     importer = RailsTranslationManager::Importer.new(
       locale: File.basename(args[:csv_path], ".csv"),
       csv_path: csv_path,
-      import_directory: Rails.root.join("config", "locales")
+      import_directory: Rails.root.join("config", "locales"),
+      nested: args[:nested] || false
     )
     importer.import
 
@@ -54,7 +55,7 @@ namespace :translation do
 
   namespace :import do
     desc "Import all locale CSV files to YAML within the app."
-    task :all, [:csv_directory] => [:environment] do |t, args|
+    task :all, [:csv_directory, :nested] => [:environment] do |t, args|
       directory = args[:csv_directory] || "tmp/locale_csv"
       import_dir = Rails.root.join("config", "locales")
 
@@ -63,6 +64,7 @@ namespace :translation do
           locale: File.basename(csv_path, ".csv"),
           csv_path: csv_path,
           import_directory: import_dir,
+          nested: args[:nested] || false
         )
         importer.import
       end
