@@ -26,4 +26,10 @@ module RailsTranslationManager
     Dir["#{rails_i18n_path}/rails/pluralization/*.rb"],
     ["#{rails_translation_manager}/config/locales/plurals.rb"]
   )
+
+  root = Rails.root.to_s
+  if root =~ /govuk_publishing_components/
+    real_components_root = root.split("govuk_publishing_components").first + "govuk_publishing_components"
+    Rails.application.config.root = real_components_root
+  end
 end
