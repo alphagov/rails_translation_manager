@@ -54,29 +54,47 @@ describe "rake tasks" do
     end
   end
 
-  describe 'translation:add_missing', type: :task do
+  describe "translation:add_missing", type: :task do
     let(:task) { Rake::Task["translation:add_missing"] }
+    let!(:cleaner_instance) { stub_cleaner }
 
-    it 'is executed' do
-      expect { task.execute }.to output.to_stdout
+    before do
+      allow(I18n::Tasks::CLI).to receive(:start)
     end
 
-    it 'triggers i18n task and allows to receive the right arguments' do
-      allow(I18n::Tasks::CLI).to receive(:start)
+    it "triggers Cleaner and allows to receive the right arguments" do
       task.execute
-      expect(I18n::Tasks::CLI).to have_received(:start).with(["add-missing", "--nil-value"])
+      expect(RailsTranslationManager::Cleaner)
+        .to have_received(:new)
+        .with(Rails.root.join("config", "locales"))
+      expect(cleaner_instance).to have_received(:clean)
+    end
+
+    it "triggers i18n task and allows to receive the right arguments" do
+      task.execute(locale: "fr")
+      expect(I18n::Tasks::CLI).to have_received(:start).with(
+        ["add-missing", "--nil-value", ["-l", "fr"]]
+      )
     end
   end
 
-  describe 'translation:normalize', type: :task do
+  describe "translation:normalize", type: :task do
     let(:task) { Rake::Task["translation:normalize"] }
+    let!(:cleaner_instance) { stub_cleaner }
 
-    it 'is executed' do
-      expect { task.execute }.to_not output.to_stdout
+    before do
+      allow(I18n::Tasks::CLI).to receive(:start)
     end
 
-    it 'triggers i18n task and allows to receive the right arguments' do
-      allow(I18n::Tasks::CLI).to receive(:start)
+    it "triggers Cleaner and allows to receive the right arguments" do
+      task.execute(locale_directory: "config/locales")
+      expect(RailsTranslationManager::Cleaner)
+        .to have_received(:new)
+        .with(Rails.root.join("config", "locales"))
+      expect(cleaner_instance).to have_received(:clean)
+    end
+
+    it "triggers i18n task and allows to receive the right arguments" do
       task.execute
       expect(I18n::Tasks::CLI).to have_received(:start).with(["normalize"])
     end
@@ -89,5 +107,15 @@ describe "rake tasks" do
     allow(importer_instance).to receive(:import)
 
     importer_instance
+  end
+
+  def stub_cleaner
+    cleaner_instance = instance_double(RailsTranslationManager::Cleaner)
+    allow(RailsTranslationManager::Cleaner)
+      .to receive(:new)
+      .and_return(cleaner_instance)
+    allow(cleaner_instance).to receive(:clean)
+
+    cleaner_instance
   end
 end
