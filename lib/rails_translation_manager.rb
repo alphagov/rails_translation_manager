@@ -15,9 +15,6 @@ require "rails_translation_manager/locale_checker"
 require "rails_translation_manager/cleaner"
 
 module RailsTranslationManager
-  autoload :Exporter, "rails_translation_manager/exporter"
-  autoload :Importer, "rails_translation_manager/importer"
-
   rails_i18n_path = Gem::Specification.find_by_name("rails-i18n").gem_dir
   rails_translation_manager = Gem::Specification.find_by_name("rails_translation_manager").gem_dir
 

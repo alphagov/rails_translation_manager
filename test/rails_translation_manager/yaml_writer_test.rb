@@ -1,3 +1,5 @@
+require "test_helper"
+require "rails_translation_manager/yaml_writer"
 module RailsTranslationManager
   class DummyWriter
     include YAMLWriter
