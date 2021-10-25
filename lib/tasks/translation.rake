@@ -55,20 +55,6 @@ namespace :translation do
     end
   end
 
-  desc "Check translation files for errors"
-  task :validate do
-    require 'rails_translation_manager/validator'
-    logger = Logger.new(STDOUT)
-    validator = RailsTranslationManager::Validator.new(Rails.root.join('config', 'locales'), logger)
-    errors = validator.check!
-    if errors.any?
-      puts "Found #{errors.size} errors:"
-      puts errors.map(&:to_s).join("\n")
-    else
-      puts "Success! No unexpected interpolation keys found."
-    end
-  end
-
   desc "Add missing translations"
   task(:add_missing, [:locale] => [:environment]) do |t, args|
     I18n::Tasks::CLI.start(TranslationHelper.new(["add-missing", "--nil-value"], args[:locale]).with_optional_locale)
