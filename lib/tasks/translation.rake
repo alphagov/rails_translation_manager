@@ -69,22 +69,6 @@ namespace :translation do
     end
   end
 
-  desc "Import and convert a locale file from another app."
-  task :steal, [:locale, :source_app_path, :mapping_file_path] do |t, args|
-    stealer = RailsTranslationManager::Stealer.new(args[:locale], args[:source_app_path], args[:mapping_file_path], Rails.root.join('config', 'locales'))
-    stealer.steal_locale
-  end
-
-  namespace :steal do
-    desc "Import and convert all locale files from another app."
-    task :all, [:source_app_path, :mapping_file_path] => [:environment] do |t, args|
-      I18n.available_locales.reject { |l| l == :en }.each do |locale|
-        stealer = RailsTranslationManager::Stealer.new(locale.to_s, args[:source_app_path], args[:mapping_file_path], Rails.root.join('config', 'locales'))
-        stealer.steal_locale
-      end
-    end
-  end
-
   desc "Add missing translations"
   task(:add_missing, [:locale] => [:environment]) do |t, args|
     I18n::Tasks::CLI.start(TranslationHelper.new(["add-missing", "--nil-value"], args[:locale]).with_optional_locale)
