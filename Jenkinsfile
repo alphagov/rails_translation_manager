@@ -1,7 +1,9 @@
 #!/usr/bin/env groovy
 
-library("govuk")
+library("govuk@clean-workspace")
 
 node {
-  govuk.buildProject()
+  govuk.buildProject(
+    cleanWorkspace: true,
+  )
 }
