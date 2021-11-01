@@ -13,6 +13,8 @@ require "rails_translation_manager/locale_checker/incompatible_plurals"
 require "rails_translation_manager/locale_checker/all_locales"
 require "rails_translation_manager/locale_checker"
 require "rails_translation_manager/cleaner"
+require "rails_translation_manager/exporter"
+require "rails_translation_manager/importer"
 
 module RailsTranslationManager
   rails_i18n_path = Gem::Specification.find_by_name("rails-i18n").gem_dir
