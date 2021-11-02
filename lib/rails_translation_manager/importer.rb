@@ -5,14 +5,16 @@ require_relative "yaml_writer"
 class RailsTranslationManager::Importer
   include YAMLWriter
 
-  def initialize(locale, csv_path, import_directory)
-    @csv_path = csv_path
+  attr_reader :locale, :csv_path, :import_directory
+
+  def initialize(locale:, csv_path:, import_directory:)
     @locale = locale
+    @csv_path = csv_path
     @import_directory = import_directory
   end
 
   def import
-    csv = CSV.read(@csv_path, headers: true, header_converters: :downcase)
+    csv = CSV.read(csv_path, headers: true, header_converters: :downcase)
     data = {}
     csv.each do |row|
       key = row["key"]
@@ -28,13 +30,13 @@ class RailsTranslationManager::Importer
       end
     end
 
-    write_yaml(import_yml_path, {@locale.to_s => data})
+    write_yaml(import_yml_path, {locale.to_s => data})
   end
 
   private
 
   def import_yml_path
-    File.join(@import_directory, "#{@locale}.yml")
+    File.join(import_directory, "#{locale}.yml")
   end
 
   def parse_translation(translation)
