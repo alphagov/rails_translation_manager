@@ -1,3 +1,7 @@
+## unreleased
+
+Allow multiple files per language to be imported. https://github.com/alphagov/rails_translation_manager/pull/20
+
 ## 1.0.0
 
 Adds logic to verify locale files are in sync with each other and have the
