@@ -1,4 +1,4 @@
-## unreleased
+## 1.1.0
 
 Allow multiple files per language to be imported. https://github.com/alphagov/rails_translation_manager/pull/20
 
