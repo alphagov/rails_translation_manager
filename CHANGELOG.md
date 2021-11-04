@@ -1,3 +1,7 @@
+## 1.1.2
+
+Handle importing files that contain Byte Order Marks. https://github.com/alphagov/rails_translation_manager/pull/27
+
 ## 1.1.1
 
 Fix Rails Translation Manager / Rails naming clash for class. https://github.com/alphagov/rails_translation_manager/pull/26
