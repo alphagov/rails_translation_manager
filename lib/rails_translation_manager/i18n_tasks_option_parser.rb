@@ -1,5 +1,4 @@
-class TranslationHelper
-
+class RailsTranslationManager::I18nTasksOptionParser
   def initialize(task_options, locale)
     @task_options = task_options
     @locale = locale
