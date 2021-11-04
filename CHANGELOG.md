@@ -1,3 +1,7 @@
+## 1.1.1
+
+Fix Rails Translation Manager / Rails naming clash for class. https://github.com/alphagov/rails_translation_manager/pull/26
+
 ## 1.1.0
 
 Allow multiple files per language to be imported. https://github.com/alphagov/rails_translation_manager/pull/20
