@@ -15,7 +15,7 @@ class RailsTranslationManager::Importer
   end
 
   def import
-    csv = CSV.read(csv_path, headers: true, header_converters: :downcase)
+    csv = CSV.read(csv_path, encoding: "bom|utf-8", headers: true, header_converters: :downcase)
 
     multiple_files_per_language ? import_csv_into_multiple_files(csv) : import_csv(csv)
   end
