@@ -18,9 +18,10 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "rails-i18n"
   spec.add_dependency "activesupport"
+  spec.add_dependency "csv", "~> 3.2"
   spec.add_dependency "i18n-tasks"
+  spec.add_dependency "rails-i18n"
 
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake", "~> 10.0"
