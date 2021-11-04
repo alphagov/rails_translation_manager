@@ -1,6 +1,6 @@
-require "rails_translation_manager"
 require "i18n/tasks/cli"
-require_relative "../tasks/translation_helper"
+require_relative "../rails_translation_manager"
+require_relative "../rails_translation_manager/i18n_tasks_option_parser"
 
 namespace :translation do
 
@@ -67,13 +67,21 @@ namespace :translation do
 
   desc "Add missing translations"
   task(:add_missing, [:locale] => [:environment]) do |t, args|
-    I18n::Tasks::CLI.start(TranslationHelper.new(["add-missing", "--nil-value"], args[:locale]).with_optional_locale)
+    option_parser = RailsTranslationManager::I18nTasksOptionParser.new(
+      ["add-missing", "--nil-value"], args[:locale]
+    ).with_optional_locale
+
+    I18n::Tasks::CLI.start(option_parser)
     RailsTranslationManager::Cleaner.new(Rails.root.join("config", "locales")).clean
   end
 
   desc "Normalize translations"
   task(:normalize, [:locale] => [:environment]) do |t, args|
-    I18n::Tasks::CLI.start(TranslationHelper.new(["normalize"], args[:locale]).with_optional_locale)
+    option_parser = RailsTranslationManager::I18nTasksOptionParser.new(
+      ["normalize"], args[:locale]
+    ).with_optional_locale
+
+    I18n::Tasks::CLI.start(option_parser)
     RailsTranslationManager::Cleaner.new(Rails.root.join("config", "locales")).clean
   end
 end
