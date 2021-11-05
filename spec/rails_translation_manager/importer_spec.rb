@@ -4,6 +4,18 @@ require "tmpdir"
 RSpec.describe RailsTranslationManager::Importer do
   let(:import_directory) { Dir.mktmpdir }
 
+  it "imports CSV containing a byte order mark" do
+    importer = described_class.new(
+      locale: "hy",
+      csv_path: "spec/locales/importer/hy_with_byte_order_mark.csv",
+      import_directory: import_directory,
+      multiple_files_per_language: false
+    )
+    importer.import
+
+    expect(File).to exist(import_directory + "/hy.yml")
+  end
+
   context "when there is one locale file per language" do
     let(:yaml_translation_data) { YAML.load_file(import_directory + "/fr.yml")["fr"] }
 

@@ -45,14 +45,18 @@ describe "rake tasks" do
 
     it "calls the importer class for each target path" do
       task.execute(csv_directory: csv_directory, multiple_files_per_language: true)
+      import_paths = Dir["spec/locales/importer/*.csv"]
 
-      expect(RailsTranslationManager::Importer)
-        .to have_received(:new)
-        .with(locale: "fr",
-              csv_path: "spec/locales/importer/fr.csv",
-              import_directory: Rails.root.join("config", "locales"),
-              multiple_files_per_language: true)
-      expect(importer_instance).to have_received(:import)
+      import_paths.each do |csv_path|
+        expect(RailsTranslationManager::Importer)
+          .to have_received(:new)
+          .with(locale: File.basename(csv_path, ".csv"),
+                csv_path: csv_path,
+                import_directory: Rails.root.join("config", "locales"),
+                multiple_files_per_language: true)
+      end
+
+      expect(importer_instance).to have_received(:import).exactly(import_paths.count)
     end
   end
 
