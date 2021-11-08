@@ -15,7 +15,9 @@ class RailsTranslationManager::Importer
   end
 
   def import
-    csv = CSV.read(csv_path, encoding: "bom|utf-8", headers: true, header_converters: :downcase)
+    csv = reject_nil_keys(
+      CSV.read(csv_path, encoding: "bom|utf-8", headers: true, header_converters: :downcase)
+    )
 
     multiple_files_per_language ? import_csv_into_multiple_files(csv) : import_csv(csv)
   end
@@ -38,6 +40,14 @@ class RailsTranslationManager::Importer
     end
 
     write_yaml(import_yml_path, { locale.to_s => data })
+  end
+
+  def reject_nil_keys(csv)
+    csv.reject do |row|
+      nil_key = row["key"].nil?
+      puts "Invalid row: #{row.inspect} for csv_path: #{csv_path}\n" if nil_key == true
+      nil_key
+    end
   end
 
   def parse_translation(translation)

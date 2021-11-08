@@ -6,3 +6,4 @@ world_location.sentiment,:whatever,:bof
 shared.price,123,123
 shared.key1,is true,true
 shared.key2,is false,false
+,,
