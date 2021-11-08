@@ -42,7 +42,7 @@ namespace :translation do
     )
     importer.import
 
-    puts "Imported CSV from: #{csv_path} to #{import_dir}"
+    puts "\nImported CSV from: #{csv_path} to #{import_dir}"
   end
 
   namespace :import do
@@ -61,7 +61,7 @@ namespace :translation do
         importer.import
       end
 
-      puts "Imported all CSVs from: #{directory} to #{import_dir}"
+      puts "\nImported all CSVs from: #{directory} to #{import_dir}"
     end
   end
 
