@@ -16,6 +16,19 @@ RSpec.describe RailsTranslationManager::Importer do
     expect(File).to exist(import_directory + "/hy.yml")
   end
 
+  it "doesn't try to import a row with a blank key" do
+    importer = described_class.new(
+      locale: "hy",
+      csv_path: "spec/locales/importer/fr.csv",
+      import_directory: import_directory,
+      multiple_files_per_language: false
+    )
+
+    expect { importer.import }.to output(
+      "Invalid row: #<CSV::Row \"key\":nil \"source\":nil \"translation\":nil> for csv_path: spec/locales/importer/fr.csv\n"
+    ).to_stdout
+  end
+
   context "when there is one locale file per language" do
     let(:yaml_translation_data) { YAML.load_file(import_directory + "/fr.yml")["fr"] }
 

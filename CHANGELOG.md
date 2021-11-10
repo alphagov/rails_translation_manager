@@ -1,3 +1,7 @@
+## 1.1.3
+
+Handle importing files that contain rows with a blank "key". https://github.com/alphagov/rails_translation_manager/pull/28
+
 ## 1.1.2
 
 Handle importing files that contain Byte Order Marks. https://github.com/alphagov/rails_translation_manager/pull/27

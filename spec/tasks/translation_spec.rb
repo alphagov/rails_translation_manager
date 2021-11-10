@@ -15,7 +15,7 @@ describe "rake tasks" do
 
     it "outputs to stdout" do
       expect { task.execute(csv_path: csv_path) }
-        .to output("Imported CSV from: #{csv_path} to #{Rails.root.join("config", "locales")}\n")
+        .to output("\nImported CSV from: #{csv_path} to #{Rails.root.join("config", "locales")}\n")
         .to_stdout
     end
 
@@ -39,7 +39,7 @@ describe "rake tasks" do
 
     it "outputs to stdout" do
       expect { task.execute(csv_directory: csv_directory) }
-        .to output("Imported all CSVs from: #{csv_directory} to #{Rails.root.join("config", "locales")}\n")
+        .to output("\nImported all CSVs from: #{csv_directory} to #{Rails.root.join("config", "locales")}\n")
         .to_stdout
     end
 
