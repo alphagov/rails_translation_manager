@@ -4,7 +4,8 @@ module RailsTranslationManager
   class LocaleChecker
     attr_reader :locale_path
 
-    CHECKER_CLASSES = [MissingEnglishLocales,
+    CHECKER_CLASSES = [ActualAvailableLocales,
+                       MissingEnglishLocales,
                        MissingForeignLocales,
                        IncompatiblePlurals].freeze
 
