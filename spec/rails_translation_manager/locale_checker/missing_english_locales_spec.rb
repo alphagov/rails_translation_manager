@@ -44,7 +44,7 @@ RSpec.describe MissingEnglishLocales do
       ]
     end
 
-    it 'outputs nil' do
+    it "outputs nil" do
       expect(described_class.new(all_locales).report)
         .to be_nil
     end
