@@ -7,7 +7,8 @@ module RailsTranslationManager
     CHECKER_CLASSES = [IncompatiblePlurals,
                        MissingDeclaredLocales,
                        MissingEnglishLocales,
-                       MissingForeignLocales].freeze
+                       MissingForeignLocales,
+                       UndeclaredLocaleFiles].freeze
 
     def initialize(locale_path)
       @locale_path = locale_path
