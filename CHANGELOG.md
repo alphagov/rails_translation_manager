@@ -1,3 +1,7 @@
+## 1.2.0
+
+Add two new checker classes. https://github.com/alphagov/rails_translation_manager/pull/30
+
 ## 1.1.3
 
 Handle importing files that contain rows with a blank "key". https://github.com/alphagov/rails_translation_manager/pull/28
