@@ -106,6 +106,28 @@ describe "rake tasks" do
     end
   end
 
+  describe "translation:remove_unused", type: :task do
+    let(:task) { Rake::Task["translation:remove_unused"] }
+    let!(:cleaner_instance) { stub_cleaner }
+
+    before do
+      allow(I18n::Tasks::CLI).to receive(:start)
+    end
+
+    it "triggers Cleaner and allows to receive the right arguments" do
+      task.execute(locale_directory: "config/locales")
+      expect(RailsTranslationManager::Cleaner)
+        .to have_received(:new)
+        .with(Rails.root.join("config", "locales"))
+      expect(cleaner_instance).to have_received(:clean)
+    end
+
+    it "triggers i18n task and allows to receive the right arguments" do
+      task.execute
+      expect(I18n::Tasks::CLI).to have_received(:start).with(["remove-unused"])
+    end
+  end
+
   def stub_importer
     importer_instance = instance_double(RailsTranslationManager::Importer)
     allow(RailsTranslationManager::Importer).to receive(:new)

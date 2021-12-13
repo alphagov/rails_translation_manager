@@ -84,4 +84,14 @@ namespace :translation do
     I18n::Tasks::CLI.start(option_parser)
     RailsTranslationManager::Cleaner.new(Rails.root.join("config", "locales")).clean
   end
+
+  desc "Remove unused keys"
+  task(:remove_unused, [:locale] => [:environment]) do |t, args|
+    option_parser = RailsTranslationManager::I18nTasksOptionParser.new(
+      ["remove-unused"], args[:locale]
+    ).with_optional_locale
+
+    I18n::Tasks::CLI.start(option_parser)
+    RailsTranslationManager::Cleaner.new(Rails.root.join("config", "locales")).clean
+  end
 end
