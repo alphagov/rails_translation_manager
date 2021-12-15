@@ -1,3 +1,7 @@
+## 1.3.0
+
+Add remove-unused task wrapper. https://github.com/alphagov/rails_translation_manager/pull/32
+
 ## 1.2.0
 
 Add two new checker classes. https://github.com/alphagov/rails_translation_manager/pull/30
