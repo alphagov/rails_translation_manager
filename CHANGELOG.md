@@ -1,3 +1,7 @@
+## 1.4.0
+
+Add `skip_validation` parameter to `LocaleChecker`. https://github.com/alphagov/rails_translation_manager/pull/35
+
 ## 1.3.0
 
 Add remove-unused task wrapper. https://github.com/alphagov/rails_translation_manager/pull/32
