@@ -10,8 +10,9 @@ module RailsTranslationManager
                        MissingForeignLocales,
                        UndeclaredLocaleFiles].freeze
 
-    def initialize(locale_path)
+    def initialize(locale_path, skip_validation = [])
       @locale_path = locale_path
+      @skip_validation = skip_validation
     end
 
     def validate_locales
@@ -21,7 +22,7 @@ module RailsTranslationManager
       false
     end
 
-    private
+  private
 
     def output_result
       errors = checker_errors.compact
@@ -46,7 +47,7 @@ module RailsTranslationManager
     end
 
     def all_locales
-      @all_locales ||= AllLocales.new(locale_path).generate
+      @all_locales ||= AllLocales.new(locale_path, @skip_validation).generate
     end
   end
 end

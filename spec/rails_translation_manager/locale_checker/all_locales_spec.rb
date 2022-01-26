@@ -21,4 +21,28 @@ RSpec.describe AllLocales do
         .to raise_error(AllLocales::NoLocaleFilesFound, 'No locale files found for the supplied path')
     end
   end
+  
+  context "when some keys are excluded" do
+    it "generates an array of hashes without those keys" do
+      expect(described_class.new("spec/locales/out_of_sync/*.yml", skip_validation = %w{wrong_plural.one}).generate)
+        .to eq(
+          [
+            { keys: %w[test wrong_plural wrong_plural.zero], locale: :en },
+            { keys: %w[other_test], locale: :cy }
+          ]
+      )
+    end
+  end
+
+  context "when a key prefix is excluded" do
+    it "generates an array of hashes without those keys" do
+      expect(described_class.new("spec/locales/out_of_sync/*.yml", skip_validation = %w{wrong_plural}).generate)
+        .to eq(
+          [
+            { keys: %w[test], locale: :en },
+            { keys: %w[other_test], locale: :cy }
+          ]
+      )
+    end
+  end
 end

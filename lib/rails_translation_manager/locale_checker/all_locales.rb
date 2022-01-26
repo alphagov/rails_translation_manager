@@ -3,8 +3,9 @@
 class AllLocales
   attr_reader :locale_path
 
-  def initialize(locale_path)
+  def initialize(locale_path, skip_validation = [])
     @locale_path = locale_path
+    @skip_validation = skip_validation
   end
 
   def generate
@@ -15,12 +16,12 @@ class AllLocales
     paths.flat_map do |locale_group|
       {
         locale: locale_group[:locale],
-        keys: all_keys_for_locale(locale_group)
+        keys: all_keys_for_locale(locale_group),
       }
     end
   end
 
-  private
+private
 
   def locale_file_paths
     I18n.available_locales.map do |locale|
@@ -43,6 +44,13 @@ class AllLocales
   def keys_from_file(locale_hash: nil, key_chain: nil, locale_keys: [], file_path: nil)
     locale_hash ||= YAML.load_file(file_path)
     keys = locale_hash.keys
+
+    keys.reject! do |key|
+      key_chain && @skip_validation.map { |prefix|
+        "#{key_chain}.#{key}".start_with? ".#{key_chain.split('.')[1]}.#{prefix}"
+      }.any?
+    end
+
     keys.each do |key|
       if locale_hash.fetch(key).is_a?(Hash)
         keys_from_file(locale_hash: locale_hash.fetch(key), key_chain: "#{key_chain}.#{key}", locale_keys: locale_keys)
