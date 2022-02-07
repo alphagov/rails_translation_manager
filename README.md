@@ -86,81 +86,6 @@ Once you have installed the gem into your application as described above, the ex
    git commit -m 'added new translations'
    ```
 
-### Validation of interpolation keys
-
-A second feature supported by this library is the validation of interpolation
-keys.
-
-The I18n library supports 'interpolation' using the following syntax:
-
-```yaml
-en:
-  some_view:
-    greeting: Hello, %{name}
-```
-
-in this case the application can pass in the value of the `name` variable.
-
-If a translation includes an interpolation placeholder which has not been
-given a value by the application backend, then a runtime error will be raised.
-
-Unfortunately the placeholder variables sometimes get changed by mistake, or
-by translators who are not aware that they should not modify text within the
-special curly braces of the interpolation placeholder.
-
-This is obviously not great, and the validation task is intended to guard
-against it.
-
-It will check all translation files and report any which contain placeholders
-which do not exist in the english file.
-
-```
-$ rake translation:validate
-Success! No unexpected interpolation keys found.
-```
-
-### Stealing translations from another app
-
-A third feature is the ability to "steal" one or more locales from an existing
-application. This functionality works by providing a mapping file, which defines
-how the translation keys in the the source app's files map to those in the app
-the gem is installed in.
-
-For example, given a locale file like this in the app to "steal" from:
-
-```yaml
-es:
-  document:
-    type:
-      case_study: Caso de estudio
-      consultation: Consulta
-```
-
-and a mapping file like this:
-
-```yaml
-document.type: content_item.format
-```
-
-running `rake translation:steal[es,../other_app,mapping_file_path.yml]` will
-result in the following locale file being created:
-
-```yaml
-es:
-  content_item:
-    format:
-      case_study: Caso de estudio
-      consultation: Consulta
-```
-
-The mapping file can live anywhere, as long as the full path (including filename)
-is given in the rake task invocation.
-
-The process will preserve data already in the output file if it is not
-referenced in the mapping, but will always override data belonging to keys
-that are in the mapping.
-
-
 ### Synchronising translation files
 
 Common issues with locale files can be identified through the `LocaleChecker`
@@ -219,32 +144,6 @@ rake translation:import[locale,path]
 
 ```
 rake translation:import:all[directory]
-```
-
-#### 
-
-#### Regenerate all locales from the EN locale - run this after adding keys
-
-```
-rake translation:regenerate[directory]
-```
-
-#### Check translation files for errors
-
-```
-rake translation:validate
-```
-
-#### Steal a specific locale file from another app
-
-```
-rake translation:steal[locale,source_app_path,mapping_file_path]
-```
-
-#### Steal all locale files from another app
-
-```
-rake translation:steal:all[source_app_path,mapping_file_path]
 ```
 
 ### Running the test suite
