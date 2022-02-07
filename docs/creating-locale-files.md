@@ -20,7 +20,7 @@ Once you have installed the gem into your application, the expected usage is:
 
 3. wait for translation to happen
 
-4. receive translation file back, check it for [character encoding issues](https://github.com/alphagov/character_encoding_cleaner)
+4. receive translation file back
 
 5. import the translation file using either:
 
