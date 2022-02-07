@@ -43,48 +43,6 @@ end
 
 ### Running the application
 
-The primary usage of this gem is to support translation workflow.
-
-Once you have installed the gem into your application as described above, the expected usage is:
-
-1. export translations to a CSV file using:
-
-   ```
-   rake translation:export:all[target_directory]
-   ```
-
-   or
-
-   ```
-   rake translation:export[target_directory,base_locale,target_locale]
-   ```
-
-2. send the appropriate CSV file to a translator
-
-3. wait for translation to happen
-
-4. receive translation file back, check it for [character encoding issues](https://github.com/alphagov/character_encoding_cleaner)
-
-5. import the translation file using either:
-
-   ```
-   rake translation:import:all[source_directory]
-   ```
-
-   or
-
-   ```
-   rake translation:import[locale,path]
-   ```
-
-   this will generate `.yml` files for each translation
-
-6. commit any changed `.yml` files
-
-   ```
-   git add config/locale
-   git commit -m 'added new translations'
-   ```
 
 ### Synchronising translation files
 
@@ -120,27 +78,31 @@ perl -0777 -p -i -e 's/(key_with_missing_plural:\n)(\s+)/\1\2zero:\n\2/g' config
 
 This commonly occurs for Slavic languages and Arabic, for example, which have plural forms other than just `:one` and `:other`.
 
-### Rake command reference
+### Further documentation
 
-#### Export a specific locale to CSV
+- [Creating locale files](docs/creating-locale-files.md) using Rails Translation Manager
+
+#### Rake command reference
+
+Export a specific locale to CSV:
 
 ```
 rake translation:export[directory,base_locale,target_locale]
 ```
 
-#### Export all locales to CSV files
+Export all locales to CSV files:
 
 ```
 rake translation:export:all[directory]
 ```
 
-#### Import a specific locale CSV to YAML within the app
+Import a specific locale CSV to YAML within the app:
 
 ```
 rake translation:import[locale,path]
 ```
 
-#### Import all locale CSV files to YAML within the app
+Import all locale CSV files to YAML within the app:
 
 ```
 rake translation:import:all[directory]
