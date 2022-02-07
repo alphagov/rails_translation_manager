@@ -41,6 +41,11 @@ RSpec.describe "locales files" do
 end
 ```
 
+### Running the test suite
+
+To run the test suite just run `bundle exec rake` from within the
+`rails_translation_manager` directory.
+
 ### Further documentation
 
 - [Creating locale files](docs/creating-locale-files.md) using Rails Translation Manager
@@ -70,22 +75,6 @@ Import all locale CSV files to YAML within the app:
 
 ```
 rake translation:import:all[directory]
-```
-
-### Running the test suite
-
-To run the test suite just run `bundle exec rake` from within the
-`rails_translation_manager` directory.
-
-You will need to clone the repository locally and run `bundle install` the
-first time you do this, eg.:
-
-```sh
-$ git clone git@github.com:alphagov/rails_translation_manager.git
-$ cd rails_translation_manager
-$ bundle install
-$ bundle exec rake
-...
 ```
 
 ## Licence
