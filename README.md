@@ -1,6 +1,7 @@
 # Rails Translation Manager
 
-Support for translation workflow in rails applications.
+Rails Translation Manager (RTM) provides a Rails engine which adds rake tasks to manage translation
+files.
 
 ## Nomenclature
 
@@ -18,13 +19,6 @@ Support for translation workflow in rails applications.
             translation strings in rails applications
 
 ## Technical documentation
-
-This gem provides a rails engine which adds rake tasks to manage translation
-files.
-
-It is intended to be included within your rails application by referencing it
-as a dependency in your `Gemfile`. You will then be able to use the rake tasks
-to manage your translation files and import/export translation strings.
 
 ### Dependencies
 
