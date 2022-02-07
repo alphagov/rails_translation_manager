@@ -3,21 +3,6 @@
 Rails Translation Manager (RTM) provides a Rails engine which adds rake tasks to manage translation
 files.
 
-## Nomenclature
-
-- **CSV**: comma separated values, a tabular data format which can be loaded into a
-           spreadsheet package
-- **I18n**: an abbreviation of 'internationalisation', which is the process of adding
-            support for multiple locales and languages to an application.
-            `I18n` is also the name of a ruby gem which supports
-            internationalisation in ruby applications.
-- **interpolation**: a technique used in I18n whereby data is inserted ("interpolated")
-                     into a translated string of text, for example `Hello %{name}`
-                     would become `Hello Sarah` if the variable `name` had the
-                     value `Sarah`.
-- **YAML**: YAML Ain't Markup Language, a textual data format used (in this case) for storing
-            translation strings in rails applications
-
 ## Technical documentation
 
 ### Dependencies
