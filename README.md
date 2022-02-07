@@ -13,19 +13,39 @@ Add this line to your application's Gemfile:
 gem 'rails_translation_manager'
 ```
 
-And then execute:
+After a `bundle install`, this will make a number of rake tasks available to your application.
+Run `bundle exec rake -T | grep translation:` for a list of tasks (or look at [translation.rake](https://github.com/alphagov/rails_translation_manager/blob/master/lib/tasks/translation.rake)).
 
-    $ bundle
+You will now also be able to run tests against your locale files to ensure that they are valid.
+Create a test file as follows.
 
-The gem depends on your rails application environment so it would not make
-sense to install this gem stand-alone.
+#### Minitest
+
+```ruby
+class LocalesValidationTest < ActiveSupport::TestCase
+  test "should validate all locale files" do
+    checker = RailsTranslationManager::LocaleChecker.new("config/locales/*.yml")
+    assert checker.validate_locales
+  end
+end
+```
+
+#### RSpec
+
+```ruby
+RSpec.describe "locales files" do
+  it "should meet all locale validation requirements" do
+    checker = RailsTranslationManager::LocaleChecker.new("config/locales/*/*.yml")
+    expect(checker.validate_locales).to be_truthy
+  end
+end
+```
 
 ### Running the application
 
 The primary usage of this gem is to support translation workflow.
 
-Once you have installed the gem into your application as described above, the
-expected usage is:
+Once you have installed the gem into your application as described above, the expected usage is:
 
 1. export translations to a CSV file using:
 
