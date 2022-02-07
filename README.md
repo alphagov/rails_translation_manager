@@ -5,10 +5,6 @@ files.
 
 ## Technical documentation
 
-### Dependencies
-
-To date it has only been tested with a rails 3.2.18 app, but it should work with later (and older) rails apps as well.
-
 ### Installation
 
 Add this line to your application's Gemfile:
