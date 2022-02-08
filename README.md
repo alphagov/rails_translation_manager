@@ -50,6 +50,7 @@ To run the test suite just run `bundle exec rake` from within the
 
 - [Creating locale files](docs/creating-locale-files.md) using Rails Translation Manager
 - [Synchronising translation files](docs/synchronising-translation-files.md)
+- [Adding a language's plural form](docs/add-language-plural-form.md)
 
 #### Rake command reference
 
