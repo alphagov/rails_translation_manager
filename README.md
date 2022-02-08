@@ -1,7 +1,6 @@
 # Rails Translation Manager
 
-Rails Translation Manager (RTM) provides a Rails engine which adds rake tasks to manage translation
-files.
+Rails Translation Manager (RTM) provides validation for locale files, and exposes several rake tasks which can be used to manage your translations. It can only be used on Rails apps.
 
 ## Technical documentation
 
