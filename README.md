@@ -115,8 +115,3 @@ For advanced tasks, refer to the i18n-tasks documentation:
 ## Licence
 
 [MIT License](LICENSE.txt)
-
-## Versioning policy
-
-We use [semantic versioning](http://semver.org/), and bump the version
-on master only. Please don't submit your own proposed version numbers.
