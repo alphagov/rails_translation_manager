@@ -82,9 +82,9 @@ RSpec.describe IncompatiblePlurals do
           <<~OUTPUT.chomp
             \e[31m[ERROR]\e[0m Incompatible plural forms, for:
 
-            - \e[31m[ERROR]\e[0m Please add plural form for 'en' <link to future documentation>
+            - \e[31m[ERROR]\e[0m Please add plural form for 'en'. See https://github.com/alphagov/rails_translation_manager/tree/master/docs/adding-editing-plural-forms.md
 
-            - \e[31m[ERROR]\e[0m Please add plural form for 'cy' <link to future documentation>
+            - \e[31m[ERROR]\e[0m Please add plural form for 'cy'. See https://github.com/alphagov/rails_translation_manager/tree/master/docs/adding-editing-plural-forms.md
 
             \e[1mIf the keys reported above are not plurals, rename them avoiding plural keywords: #{LocaleCheckerHelper::PLURAL_KEYS}\e[22m
           OUTPUT

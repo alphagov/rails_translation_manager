@@ -24,7 +24,7 @@ class IncompatiblePlurals < BaseChecker
       plural_form = all_plural_forms[plurals[:locale]]
 
       if plural_form.blank?
-        "- \e[31m[ERROR]\e[0m Please add plural form for '#{plurals[:locale]}' <link to future documentation>"
+        "- \e[31m[ERROR]\e[0m Please add plural form for '#{plurals[:locale]}'. See https://github.com/alphagov/rails_translation_manager/tree/master/docs/adding-editing-plural-forms.md"
       else
         incompatible_plurals(plurals, plural_form)
       end
