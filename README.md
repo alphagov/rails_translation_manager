@@ -95,6 +95,15 @@ Remove keys that are not used anywhere in your application:
 rake translation:remove_unused
 ```
 
+Sometimes RTM might remove keys that actually _are_ used by your application. This happens when the keys are referenced dynamically. You can make RTM ignore these keys by creating a `/config/i18n-tasks.yml` file with an `ignore_unused` key. For example:
+
+```yaml
+ignore_unused:
+  - 'content_item.schema_name.*.{one,other,zero,few,many,two}'
+  - 'corporate_information_page.*'
+  - 'travel_advice.alert_status.*'
+```
+
 ## Licence
 
 [MIT License](LICENSE.txt)
