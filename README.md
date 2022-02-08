@@ -47,8 +47,8 @@ To run the test suite just run `bundle exec rake` from within the
 
 ### Further documentation
 
-- [Creating locale files](docs/creating-locale-files.md) using RTM
 - [Adding and editing plural forms](docs/adding-editing-plural-forms.md)
+- [Creating locale files](docs/creating-locale-files.md) using RTM
 
 #### Rake command reference
 
