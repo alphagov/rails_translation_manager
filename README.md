@@ -14,7 +14,7 @@ gem 'rails_translation_manager'
 ```
 
 After a `bundle install`, this will make a number of rake tasks available to your application.
-Run `bundle exec rake -T | grep translation:` for a list of tasks (or look at [translation.rake](https://github.com/alphagov/rails_translation_manager/blob/master/lib/tasks/translation.rake)).
+See the [Rake command reference](#rake-command-reference) below.
 
 You will now also be able to run tests against your locale files to ensure that they are valid.
 Create a test file as follows.
@@ -75,6 +75,24 @@ Import all locale CSV files to YAML within the app:
 
 ```
 rake translation:import:all[directory]
+```
+
+Add missing keys with placeholders:
+
+```
+rake translation:add_missing
+```
+
+Normalize your locales (remove whitespace, sort keys alphabetically, etc):
+
+```
+rake translation:normalize
+```
+
+Remove keys that are not used anywhere in your application:
+
+```
+rake translation:remove_unused
 ```
 
 ## Licence
