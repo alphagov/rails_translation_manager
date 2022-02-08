@@ -104,6 +104,14 @@ ignore_unused:
   - 'travel_advice.alert_status.*'
 ```
 
+#### i18n-tasks
+
+RTM uses [i18n-tasks](https://github.com/glebm/i18n-tasks) under the hood.
+For advanced tasks, refer to the i18n-tasks documentation:
+
+- [Move / rename / merge keys](https://github.com/glebm/i18n-tasks#move--rename--merge-keys)
+- [Delete keys](https://github.com/glebm/i18n-tasks#delete-keys)
+
 ## Licence
 
 [MIT License](LICENSE.txt)
