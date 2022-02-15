@@ -1,4 +1,4 @@
-# Creating locale files
+# Translating locale files
 
 This document explains how to use Rails Translation Manager to create locale files.
 
