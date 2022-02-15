@@ -59,6 +59,8 @@ For advanced tasks, refer to the i18n-tasks documentation:
 - [Move / rename / merge keys](https://github.com/glebm/i18n-tasks#move--rename--merge-keys)
 - [Delete keys](https://github.com/glebm/i18n-tasks#delete-keys)
 
+Read [why we architected RTM in this way](https://docs.google.com/document/d/1bao4KfXtZOwoUZ4ZGRSKi1TagKMq-zsy8xAc-2GZlgo/edit).
+
 ## Licence
 
 [MIT License](LICENSE.txt)
