@@ -52,17 +52,19 @@ To run the test suite just run `bundle exec rake` from within the
 
 #### Rake command reference
 
-Export a specific locale to CSV:
+±Export a specific locale to CSV:
 
 ```
 rake translation:export[directory,base_locale,target_locale]
 ```
 
-Export all locales to CSV files:
+±Export all locales to CSV files:
 
 ```
 rake translation:export:all[directory]
 ```
+
+> ± These tasks only work in single-file setups, i.e. `en/en.yml`. They won't work with multi-file setups such as the [structure used in Collections](https://github.com/alphagov/collections/tree/063430f92a9866b345ae727ef9c7984b50b86c9e/config/locales/en).
 
 Import a specific locale CSV to YAML within the app:
 
