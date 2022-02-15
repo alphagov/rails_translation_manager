@@ -64,19 +64,21 @@ rake translation:export[directory,base_locale,target_locale]
 rake translation:export:all[directory]
 ```
 
-> ± These tasks only work in single-file setups, i.e. `en/en.yml`. They won't work with multi-file setups such as the [structure used in Collections](https://github.com/alphagov/collections/tree/063430f92a9866b345ae727ef9c7984b50b86c9e/config/locales/en).
+> ± These tasks won't work in [multi-file setups](#multi-file-setups).
 
 Import a specific locale CSV to YAML within the app:
 
 ```
-rake translation:import[locale,path]
+rake translation:import[locale,path,multiple_files_per_language]
 ```
 
 Import all locale CSV files to YAML within the app:
 
 ```
-rake translation:import:all[directory]
+rake translation:import:all[directory,multiple_files_per_language]
 ```
+
+> The `multiple_files_per_language` parameter is optional and defaults to `false`. See [multi-file setups](#multi-file-setups).
 
 Add missing keys with placeholders:
 
@@ -104,6 +106,34 @@ ignore_unused:
   - 'corporate_information_page.*'
   - 'travel_advice.alert_status.*'
 ```
+
+#### Multi-file setups
+
+Locale files can follow a single-file structure. For example:
+
+```
+config/
+  locales/
+    en/
+      en.yml
+    fr/
+      fr.yml
+```
+
+They can also follow a multi-file structure. For example:
+
+```
+config/
+  locales/
+    en/
+      bar.yml
+      foo.yml
+    fr/
+      bar.yml
+      foo.yml
+```
+
+Some tasks will work with both structures, but others are limited to only one structure type, due to lack of development time. Ideally, all tasks would work with both types.
 
 #### i18n-tasks
 
