@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "rails_translation_manager"
+require "climate_control"
 
 RSpec.configure do |config|
   config.before do
