@@ -3,9 +3,9 @@ require_relative "../../spec/support/tasks"
 
 describe "rake tasks" do
   before do
-    fake_rails = double()
-    fake_rails.stub(:root) { Pathname.new("spec") }
-    stub_const("Rails", fake_rails)
+    allow(RailsTranslationManager)
+      .to receive(:locale_root)
+      .and_return(Pathname.new("spec/config/locales"))
   end
 
   describe "translation:import", type: :task do
@@ -15,7 +15,7 @@ describe "rake tasks" do
 
     it "outputs to stdout" do
       expect { task.execute(csv_path: csv_path) }
-        .to output("\nImported CSV from: #{csv_path} to #{Rails.root.join("config", "locales")}\n")
+        .to output("\nImported CSV from: #{csv_path} to #{RailsTranslationManager.locale_root}\n")
         .to_stdout
     end
 
@@ -26,7 +26,7 @@ describe "rake tasks" do
         .to have_received(:new)
         .with(locale: "fr",
               csv_path: csv_path,
-              import_directory: Rails.root.join("config", "locales"),
+              import_directory: RailsTranslationManager.locale_root,
               multiple_files_per_language: false)
       expect(importer_instance).to have_received(:import)
     end
@@ -34,12 +34,12 @@ describe "rake tasks" do
 
   describe "translation:import:all", type: :task do
     let(:task) { Rake::Task["translation:import:all"] }
-    let(:csv_directory) { "locales/importer" }
+    let(:csv_directory) { "spec/locales/importer" }
     let!(:importer_instance) { stub_importer }
 
     it "outputs to stdout" do
       expect { task.execute(csv_directory: csv_directory) }
-        .to output("\nImported all CSVs from: #{csv_directory} to #{Rails.root.join("config", "locales")}\n")
+        .to output("\nImported all CSVs from: #{csv_directory} to #{RailsTranslationManager.locale_root}\n")
         .to_stdout
     end
 
@@ -52,7 +52,7 @@ describe "rake tasks" do
           .to have_received(:new)
           .with(locale: File.basename(csv_path, ".csv"),
                 csv_path: csv_path,
-                import_directory: Rails.root.join("config", "locales"),
+                import_directory: RailsTranslationManager.locale_root,
                 multiple_files_per_language: true)
       end
 
@@ -72,7 +72,7 @@ describe "rake tasks" do
       task.execute
       expect(RailsTranslationManager::Cleaner)
         .to have_received(:new)
-        .with(Rails.root.join("config", "locales"))
+        .with(RailsTranslationManager.locale_root)
       expect(cleaner_instance).to have_received(:clean)
     end
 
@@ -96,7 +96,7 @@ describe "rake tasks" do
       task.execute(locale_directory: "config/locales")
       expect(RailsTranslationManager::Cleaner)
         .to have_received(:new)
-        .with(Rails.root.join("config", "locales"))
+        .with(RailsTranslationManager.locale_root)
       expect(cleaner_instance).to have_received(:clean)
     end
 
@@ -118,7 +118,7 @@ describe "rake tasks" do
       task.execute(locale_directory: "config/locales")
       expect(RailsTranslationManager::Cleaner)
         .to have_received(:new)
-        .with(Rails.root.join("config", "locales"))
+        .with(RailsTranslationManager.locale_root)
       expect(cleaner_instance).to have_received(:clean)
     end
 
