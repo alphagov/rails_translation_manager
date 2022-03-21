@@ -1,3 +1,7 @@
+# Unreleased
+
+Allow configuring the locale files directory with `RAILS_TRANSLATION_MANAGER_LOCALE_ROOT`. https://github.com/alphagov/rails_translation_manager/pull/38
+
 ## 1.4.0
 
 Add `skip_validation` parameter to `LocaleChecker`. https://github.com/alphagov/rails_translation_manager/pull/35
