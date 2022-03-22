@@ -6,9 +6,10 @@ namespace :translation do
 
   desc "Export a specific locale to CSV."
   task :export, [:directory, :base_locale, :target_locale] => [:environment] do |t, args|
+    locale_root = RailsTranslationManager.locale_root
     FileUtils.mkdir_p(args[:directory]) unless File.exist?(args[:directory])
-    base_locale = Rails.root.join("config", "locales", args[:base_locale] + ".yml")
-    target_locale_path = Rails.root.join("config", "locales", args[:target_locale] + ".yml")
+    base_locale = locale_root.join(args[:base_locale] + ".yml")
+    target_locale_path = locale_root.join(args[:target_locale] + ".yml")
     exporter = RailsTranslationManager::Exporter.new(args[:directory], base_locale, target_locale_path)
     exporter.export
   end
@@ -16,10 +17,11 @@ namespace :translation do
   namespace :export do
     desc "Export all locales to CSV files."
     task :all, [:directory] => [:environment] do |t, args|
+      locale_root = RailsTranslationManager.locale_root
       directory = args[:directory] || "tmp/locale_csv"
       FileUtils.mkdir_p(directory) unless File.exist?(directory)
-      locales = Dir[Rails.root.join("config", "locales", "*.yml")]
-      base_locale = Rails.root.join("config", "locales", "en.yml")
+      locales = Dir[locale_root.join("*.yml")]
+      base_locale = locale_root.join("en.yml")
       target_locales = locales - [base_locale.to_s]
       target_locales.each do |target_locale_path|
         exporter = RailsTranslationManager::Exporter.new(directory, base_locale, target_locale_path)
@@ -31,37 +33,35 @@ namespace :translation do
 
   desc "Import a specific locale CSV to YAML within the app."
   task :import, [:csv_path, :multiple_files_per_language] => [:environment] do |t, args|
-    import_dir = Rails.root.join("config", "locales")
     csv_path = args[:csv_path]
 
     importer = RailsTranslationManager::Importer.new(
       locale: File.basename(args[:csv_path], ".csv"),
       csv_path: csv_path,
-      import_directory: Rails.root.join("config", "locales"),
+      import_directory: RailsTranslationManager.locale_root,
       multiple_files_per_language: args[:multiple_files_per_language] || false
     )
     importer.import
 
-    puts "\nImported CSV from: #{csv_path} to #{import_dir}"
+    puts "\nImported CSV from: #{csv_path} to #{RailsTranslationManager.locale_root}"
   end
 
   namespace :import do
     desc "Import all locale CSV files to YAML within the app."
     task :all, [:csv_directory, :multiple_files_per_language] => [:environment] do |t, args|
       directory = args[:csv_directory] || "tmp/locale_csv"
-      import_dir = Rails.root.join("config", "locales")
 
-      Dir[Rails.root.join(directory, "*.csv")].each do |csv_path|
+      Dir["#{directory}/*.csv"].each do |csv_path|
         importer = RailsTranslationManager::Importer.new(
           locale: File.basename(csv_path, ".csv"),
           csv_path: csv_path,
-          import_directory: import_dir,
+          import_directory: RailsTranslationManager.locale_root,
           multiple_files_per_language: args[:multiple_files_per_language] || false
         )
         importer.import
       end
 
-      puts "\nImported all CSVs from: #{directory} to #{import_dir}"
+      puts "\nImported all CSVs from: #{directory} to #{RailsTranslationManager.locale_root}"
     end
   end
 
@@ -72,7 +72,7 @@ namespace :translation do
     ).with_optional_locale
 
     I18n::Tasks::CLI.start(option_parser)
-    RailsTranslationManager::Cleaner.new(Rails.root.join("config", "locales")).clean
+    RailsTranslationManager::Cleaner.new(RailsTranslationManager.locale_root).clean
   end
 
   desc "Normalize translations"
@@ -82,7 +82,7 @@ namespace :translation do
     ).with_optional_locale
 
     I18n::Tasks::CLI.start(option_parser)
-    RailsTranslationManager::Cleaner.new(Rails.root.join("config", "locales")).clean
+    RailsTranslationManager::Cleaner.new(RailsTranslationManager.locale_root).clean
   end
 
   desc "Remove unused keys"
@@ -92,6 +92,6 @@ namespace :translation do
     ).with_optional_locale
 
     I18n::Tasks::CLI.start(option_parser)
-    RailsTranslationManager::Cleaner.new(Rails.root.join("config", "locales")).clean
+    RailsTranslationManager::Cleaner.new(RailsTranslationManager.locale_root).clean
   end
 end

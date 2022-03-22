@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 require "rails_translation_manager/version"
-require "rails_translation_manager/railtie" if defined?(Rails)
+require "rails"
+require "rails_translation_manager/railtie"
 require "rails-i18n"
 
 require "rails_translation_manager/locale_checker/base_checker"
@@ -26,4 +27,12 @@ module RailsTranslationManager
     Dir["#{rails_i18n_path}/rails/pluralization/*.rb"],
     ["#{rails_translation_manager}/config/locales/plurals.rb"]
   )
+
+  def self.locale_root
+    if ENV["RAILS_TRANSLATION_MANAGER_LOCALE_ROOT"]
+      Pathname.new(ENV["RAILS_TRANSLATION_MANAGER_LOCALE_ROOT"])
+    else
+      Rails.root.join("config/locales")
+    end
+  end
 end
