@@ -25,6 +25,6 @@ class MissingDeclaredLocales < BaseChecker
   end
 
   def compare
-    I18n.available_locales - actual_locales
+    I18n.available_locales.map(&:downcase) - actual_locales
   end
 end
