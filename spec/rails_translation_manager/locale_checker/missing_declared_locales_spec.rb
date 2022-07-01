@@ -18,7 +18,7 @@ RSpec.describe MissingDeclaredLocales do
 
   context "when there are missing locales" do
     before do
-      I18n.available_locales = [:en, :cy, :pt]
+      I18n.available_locales = [:en, :CY, :pt]
     end
 
     it "outputs the missing locales" do
