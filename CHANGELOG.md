@@ -1,3 +1,7 @@
+# 1.5.1
+
+Fixes uppercase bug when comparing actual vs available locales. https://github.com/alphagov/rails_translation_manager/pull/43
+
 # 1.5.0
 
 Allow configuring the locale files directory with `RAILS_TRANSLATION_MANAGER_LOCALE_ROOT`. https://github.com/alphagov/rails_translation_manager/pull/38
