@@ -1,3 +1,7 @@
+# 1.5.2
+
+Add missing plurals for Gujarati and Yiddish https://github.com/alphagov/rails_translation_manager/pull/44
+
 # 1.5.1
 
 Fixes uppercase bug when comparing actual vs available locales. https://github.com/alphagov/rails_translation_manager/pull/43
