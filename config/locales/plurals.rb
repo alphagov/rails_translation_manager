@@ -5,6 +5,8 @@
   dr: { i18n: { plural: { keys: %i[one other], rule: ->(n) { n == 1 ? :one : :other } } } },
   # Latin America and Caribbean Spanish
   "es-419": { i18n: { plural: { keys: %i[one other], rule: ->(n) { n == 1 ? :one : :other } } } },
+  # Gujarati
+  gu: { i18n: { plural: { keys: %i[one other], rule: ->(n) { [0, 1].include?(n) ? :one : :other } } } },
   # Scottish Gaelic
   gd: { i18n: { plural: { keys: %i[one two few other],
                           rule: lambda do |n|
@@ -18,8 +20,6 @@
                               :other
                             end
                           end } } },
-  # Gujarati
-  gu: { i18n: { plural: { keys: %i[one other], rule: ->(n) { [0, 1].include?(n) ? :one : :other } } } },
   # Armenian
   hy: { i18n: { plural: { keys: %i[one other], rule: ->(n) { [0, 1].include?(n) ? :one : :other } } } },
   # Kazakh
@@ -42,6 +42,8 @@
   tk: { i18n: { plural: { keys: %i[one other], rule: ->(n) { n == 1 ? :one : :other } } } },
   # Uzbek
   uz: { i18n: { plural: { keys: %i[one other], rule: ->(n) { n == 1 ? :one : :other } } } },
+  # Yiddish
+  yi: { i18n: { plural: { keys: %i[one other], rule: ->(n) { [0, 1].include?(n) ? :one : :other } } } },
   # Chinese Hong Kong
   'zh-hk' => { i18n: { plural: { keys: %i[other], rule: -> { :other } } } },
   # Chinese Taiwan
