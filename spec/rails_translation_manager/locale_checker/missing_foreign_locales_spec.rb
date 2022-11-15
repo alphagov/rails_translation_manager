@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require 'spec_helper'
 
 RSpec.describe MissingForeignLocales do
-  context "when there are missing foreign locales" do
+  context 'when there are missing foreign locales' do
     let(:all_locales) do
       [
         {
@@ -25,7 +25,7 @@ RSpec.describe MissingForeignLocales do
       I18n.available_locales << %i[fr]
     end
 
-    it "outputs the missing locales and groups them by common keys" do
+    it 'outputs the missing locales and groups them by common keys' do
       expect(described_class.new(all_locales).report)
         .to eq(
           <<~OUTPUT.chomp
@@ -52,13 +52,13 @@ RSpec.describe MissingForeignLocales do
       ]
     end
 
-    it "outputs nil" do
+    it 'outputs nil' do
       expect(described_class.new(all_locales).report)
         .to be_nil
     end
   end
 
-  context "when there are plurals" do
+  context 'when there are plurals' do
     let(:all_locales) do
       [
         {

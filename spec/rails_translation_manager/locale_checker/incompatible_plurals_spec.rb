@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require 'spec_helper'
 
 RSpec.describe IncompatiblePlurals do
-  context "when there are missing plurals" do
+  context 'when there are missing plurals' do
     let(:all_locales) do
       [
         {
@@ -17,7 +17,7 @@ RSpec.describe IncompatiblePlurals do
       allow(PluralForms).to receive(:all).and_return({ en: %i[one other] })
     end
 
-    it "returns the missing plural forms" do
+    it 'returns the missing plural forms' do
       expect(described_class.new(all_locales).report)
         .to eq(
           <<~OUTPUT.chomp
@@ -47,7 +47,7 @@ RSpec.describe IncompatiblePlurals do
       allow(PluralForms).to receive(:all).and_return({ en: %i[one other] })
     end
 
-    it "returns nil" do
+    it 'returns nil' do
       expect(described_class.new(all_locales).report)
         .to be_nil
     end
@@ -76,7 +76,7 @@ RSpec.describe IncompatiblePlurals do
       allow(PluralForms).to receive(:all).and_return({ cy: nil, en: nil })
     end
 
-    it "outputs the missing plural forms" do
+    it 'outputs the missing plural forms' do
       expect(described_class.new(all_locales).report)
         .to eq(
           <<~OUTPUT.chomp

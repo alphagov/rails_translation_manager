@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require 'spec_helper'
 
 RSpec.describe UndeclaredLocaleFiles do
   let(:all_locales) do
@@ -16,20 +16,20 @@ RSpec.describe UndeclaredLocaleFiles do
     ]
   end
 
-  context "when there are undeclared locales" do
+  context 'when there are undeclared locales' do
     before do
       I18n.available_locales = [:en]
     end
 
-    it "outputs the missing locales" do
+    it 'outputs the missing locales' do
       expect(described_class.new(all_locales).report)
         .to eq(
           <<~OUTPUT.chomp
-          \e[31m[ERROR]\e[0m Undeclared locale file(s) detected for:
+            \e[31m[ERROR]\e[0m Undeclared locale file(s) detected for:
 
-          cy
+            cy
 
-          \e[1mEither declare these locale files or remove them from your locale files directory.\e[22m
+            \e[1mEither declare these locale files or remove them from your locale files directory.\e[22m
           OUTPUT
         )
     end
@@ -37,10 +37,10 @@ RSpec.describe UndeclaredLocaleFiles do
 
   context "when there aren't undeclared locales" do
     before do
-      I18n.available_locales = [:en, :cy]
+      I18n.available_locales = %i[en cy]
     end
 
-    it "outputs nil" do
+    it 'outputs nil' do
       expect(described_class.new(all_locales).report)
         .to be_nil
     end

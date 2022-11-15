@@ -12,11 +12,11 @@ class MissingDeclaredLocales < BaseChecker
 
   def format_error_message(locales)
     <<~OUTPUT.chomp
-    \e[31m[ERROR]\e[0m No locale files detected for:
+      \e[31m[ERROR]\e[0m No locale files detected for:
 
-    #{locales.join("\n\n")}
+      #{locales.join("\n\n")}
 
-    \e[1mEither create these locale files or remove these locales from your I18n `available_locales` config.\e[22m
+      \e[1mEither create these locale files or remove these locales from your I18n `available_locales` config.\e[22m
     OUTPUT
   end
 

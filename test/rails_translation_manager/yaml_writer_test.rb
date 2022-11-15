@@ -1,12 +1,13 @@
-require "test_helper"
-require "rails_translation_manager/yaml_writer"
+# frozen_string_literal: true
+
+require 'test_helper'
+require 'rails_translation_manager/yaml_writer'
 module RailsTranslationManager
   class DummyWriter
     include YAMLWriter
   end
 
   class WriterTest < Minitest::Test
-
     def setup
       @output_file = Tempfile.new('fr')
     end
@@ -17,32 +18,32 @@ module RailsTranslationManager
     end
 
     test 'outputs YAML without the header --- line for consistency with convention' do
-      data = {"fr" => {
-        key1: [:source, :translation],
-        "key2" => ["value", "le value"],
-      }}
+      data = { 'fr' => {
+        key1: %i[source translation],
+        'key2' => ['value', 'le value']
+      } }
 
       DummyWriter.new.write_yaml(output_file, data)
 
-      assert_equal "fr:", File.readlines(output_file).first.strip
+      assert_equal 'fr:', File.readlines(output_file).first.strip
     end
 
     test 'outputs a newline at the end of the YAML for consistency with code editors' do
-      data = {"fr" => {
-        key1: [:source, :translation],
-        "key2" => ["value", "le value"],
-      }}
+      data = { 'fr' => {
+        key1: %i[source translation],
+        'key2' => ['value', 'le value']
+      } }
 
       DummyWriter.new.write_yaml(output_file, data)
 
-      assert_match /\n$/, File.readlines(output_file).last
+      assert_match(/\n$/, File.readlines(output_file).last)
     end
 
     test 'strips whitespace from the end of lines for consistency with code editors' do
-      data = {fr: {
-        key1: [:source, :translation],
-        "key2" => ["value", nil],
-      }}
+      data = { fr: {
+        key1: %i[source translation],
+        'key2' => ['value', nil]
+      } }
 
       DummyWriter.new.write_yaml(output_file, data)
 
@@ -50,11 +51,10 @@ module RailsTranslationManager
       refute lines.any? { |line| line =~ /\s\n$/ }
     end
 
-  private
+    private
 
     def output_file
       @output_file.path
     end
   end
 end
-

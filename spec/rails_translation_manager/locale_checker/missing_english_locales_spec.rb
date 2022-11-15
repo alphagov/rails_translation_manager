@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require 'spec_helper'
 
 RSpec.describe MissingEnglishLocales do
-  context "where there are missing English locales" do
+  context 'where there are missing English locales' do
     let(:all_locales) do
       [
         {
@@ -17,7 +17,7 @@ RSpec.describe MissingEnglishLocales do
       ]
     end
 
-    it "outputs the missing locales" do
+    it 'outputs the missing locales' do
       expect(described_class.new(all_locales).report)
         .to eq(
           <<~OUTPUT.chomp
@@ -44,13 +44,13 @@ RSpec.describe MissingEnglishLocales do
       ]
     end
 
-    it "outputs nil" do
+    it 'outputs nil' do
       expect(described_class.new(all_locales).report)
         .to be_nil
     end
   end
 
-  context "when there are plurals" do
+  context 'when there are plurals' do
     let(:all_locales) do
       [
         {

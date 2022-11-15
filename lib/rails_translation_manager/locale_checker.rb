@@ -22,13 +22,13 @@ module RailsTranslationManager
       false
     end
 
-  private
+    private
 
     def output_result
       errors = checker_errors.compact
 
       if errors.blank?
-        puts "Locale files are in sync, nice job!"
+        puts 'Locale files are in sync, nice job!'
         true
       else
         errors.each do |error_message|

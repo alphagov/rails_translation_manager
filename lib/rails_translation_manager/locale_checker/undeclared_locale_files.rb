@@ -12,11 +12,11 @@ class UndeclaredLocaleFiles < BaseChecker
 
   def format_error_message(locales)
     <<~OUTPUT.chomp
-    \e[31m[ERROR]\e[0m Undeclared locale file(s) detected for:
+      \e[31m[ERROR]\e[0m Undeclared locale file(s) detected for:
 
-    #{locales.join("\n\n")}
+      #{locales.join("\n\n")}
 
-    \e[1mEither declare these locale files or remove them from your locale files directory.\e[22m
+      \e[1mEither declare these locale files or remove them from your locale files directory.\e[22m
     OUTPUT
   end
 

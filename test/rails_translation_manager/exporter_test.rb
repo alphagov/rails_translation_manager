@@ -1,134 +1,136 @@
-require "test_helper"
+# frozen_string_literal: true
 
-require "rails_translation_manager/exporter"
-require "tmpdir"
-require "csv"
-require "i18n"
+require 'test_helper'
+
+require 'rails_translation_manager/exporter'
+require 'tmpdir'
+require 'csv'
+require 'i18n'
 
 module RailsTranslationManager
   class ExporterTest < Minitest::Test
-
     def setup
       # fast test helper means we have to setup the pluralizations we're
       # going to use manually as rails-i18n does it in the rails app
       I18n.backend.class.send(:include, I18n::Backend::Pluralization)
-      I18n.available_locales = [:fr, :es, :ar, :sk, :uk]
+      I18n.available_locales = %i[fr es ar sk uk]
       with_pluralization_forms(
-        'fr' => [:one, :other],
-        'es' => [:one, :other],
-        'ar' => [:zero, :one, :two, :few, :many, :other],
-        'sk' => [:one, :few, :other],
-        'uk' => [:one, :few, :many, :other]
+        'fr' => %i[one other],
+        'es' => %i[one other],
+        'ar' => %i[zero one two few many other],
+        'sk' => %i[one few other],
+        'uk' => %i[one few many other]
       )
     end
 
     test 'should export CSV file for filling in a given translation' do
       given_locale(:en, {
-        world_location: {
-          type: {
-            country: "Country"
-          },
-          country: "Spain",
-          headings: {
-            mission: "Our mission",
-            offices: "Offices"
-          }
-        }
-      })
+                     world_location: {
+                       type: {
+                         country: 'Country'
+                       },
+                       country: 'Spain',
+                       headings: {
+                         mission: 'Our mission',
+                         offices: 'Offices'
+                       }
+                     }
+                   })
 
       Exporter.new(export_directory, locale_path(:en), locale_path(:fr)).export
 
-      assert File.file?(exported_file("fr.csv")), "should write a file"
+      assert File.file?(exported_file('fr.csv')), 'should write a file'
 
-      data = read_csv_data(exported_file("fr.csv"))
-      assert_equal ["Country", nil], data["world_location.type.country"]
-      assert_equal ["Spain", nil], data["world_location.country"]
-      assert_equal ["Our mission", nil], data["world_location.headings.mission"]
-      assert_equal ["Offices", nil], data["world_location.headings.offices"]
+      data = read_csv_data(exported_file('fr.csv'))
+      assert_equal ['Country', nil], data['world_location.type.country']
+      assert_equal ['Spain', nil], data['world_location.country']
+      assert_equal ['Our mission', nil], data['world_location.headings.mission']
+      assert_equal ['Offices', nil], data['world_location.headings.offices']
     end
 
     test 'should include any existing translations in the output file' do
       given_locale(:en, {
-        world_location: {
-          type: {
-            country: "Country"
-          },
-          country: "Spain",
-          headings: {
-            mission: "Our mission",
-            offices: "Offices"
-          }
-        }
-      })
+                     world_location: {
+                       type: {
+                         country: 'Country'
+                       },
+                       country: 'Spain',
+                       headings: {
+                         mission: 'Our mission',
+                         offices: 'Offices'
+                       }
+                     }
+                   })
       given_locale(:fr, {
-        world_location: {
-          type: {
-            country: "Pays"
-          },
-          country: "Espange"
-        }
-      })
+                     world_location: {
+                       type: {
+                         country: 'Pays'
+                       },
+                       country: 'Espange'
+                     }
+                   })
 
       Exporter.new(export_directory, locale_path(:en), locale_path(:fr)).export
 
-      assert File.file?(exported_file("fr.csv")), "should write a file"
+      assert File.file?(exported_file('fr.csv')), 'should write a file'
 
-      data = read_csv_data(exported_file("fr.csv"))
-      assert_equal ["Country", "Pays"], data["world_location.type.country"]
-      assert_equal ["Spain", "Espange"], data["world_location.country"]
-      assert_equal ["Our mission", nil], data["world_location.headings.mission"]
-      assert_equal ["Offices", nil], data["world_location.headings.offices"]
+      data = read_csv_data(exported_file('fr.csv'))
+      assert_equal %w[Country Pays], data['world_location.type.country']
+      assert_equal %w[Spain Espange], data['world_location.country']
+      assert_equal ['Our mission', nil], data['world_location.headings.mission']
+      assert_equal ['Offices', nil], data['world_location.headings.offices']
     end
 
     test 'should not include any language names that are not English or the native in the output file' do
       given_locale(:en, {
-        language_names: {
-          en: "English",
-          es: "Spanish",
-          fr: "French"
-        }
-      })
+                     language_names: {
+                       en: 'English',
+                       es: 'Spanish',
+                       fr: 'French'
+                     }
+                   })
 
       Exporter.new(export_directory, locale_path(:en), locale_path(:fr)).export
 
-      assert File.file?(exported_file("fr.csv")), "should write a file"
+      assert File.file?(exported_file('fr.csv')), 'should write a file'
 
-      data = read_csv_data(exported_file("fr.csv"))
-      assert_equal ["French", nil], data["language_names.fr"]
-      assert_equal nil, data["language_names.es"], "language key for spanish should not be present"
+      data = read_csv_data(exported_file('fr.csv'))
+      assert_equal ['French', nil], data['language_names.fr']
+      assert_equal nil, data['language_names.es'], 'language key for spanish should not be present'
     end
 
     test 'should export correct pluralization forms for target' do
       given_locale(:en, {
-        ministers: {
-          one: 'minister',
-          other: 'ministers'
-        }
-      })
+                     ministers: {
+                       one: 'minister',
+                       other: 'ministers'
+                     }
+                   })
 
       Exporter.new(export_directory, locale_path(:en), locale_path(:ar)).export
 
-      assert File.file?(exported_file("ar.csv")), "should write a file"
+      assert File.file?(exported_file('ar.csv')), 'should write a file'
 
-      data = read_csv_data(exported_file("ar.csv"))
-      ['zero', 'one', 'two', 'few', 'many', 'other'].each do |arabic_plural_form|
-        assert data.has_key?("ministers.#{arabic_plural_form}"), "expected plural form #{arabic_plural_form} to be present, but it's not"
+      data = read_csv_data(exported_file('ar.csv'))
+      %w[zero one two few many other].each do |arabic_plural_form|
+        assert data.key?("ministers.#{arabic_plural_form}"),
+               "expected plural form #{arabic_plural_form} to be present, but it's not"
       end
     end
 
     test 'should export source pluralization forms values to target when the forms match' do
       given_locale(:en, {
-        ministers: {
-          one: 'minister',
-          other: 'ministers'
-        }
-      })
+                     ministers: {
+                       one: 'minister',
+                       other: 'ministers'
+                     }
+                   })
 
       Exporter.new(export_directory, locale_path(:en), locale_path(:sk)).export
 
-      assert File.file?(exported_file("sk.csv")), "should write a file"
+      assert File.file?(exported_file('sk.csv')), 'should write a file'
 
-      data = read_csv_data(exported_file("sk.csv"))
+      data = read_csv_data(exported_file('sk.csv'))
       assert_equal ['minister', nil], data['ministers.one']
       assert_equal ['ministers', nil], data['ministers.other']
       assert_equal [nil, nil], data['ministers.few']
@@ -136,79 +138,84 @@ module RailsTranslationManager
 
     test 'should keep existing target pluralization form values' do
       given_locale(:en, {
-        ministers: {
-          one: 'minister',
-          other: 'ministers'
-        }
-      })
+                     ministers: {
+                       one: 'minister',
+                       other: 'ministers'
+                     }
+                   })
       given_locale(:sk, {
-        ministers: {
-          one: 'min',
-          few: 'mini'
-        }
-      })
+                     ministers: {
+                       one: 'min',
+                       few: 'mini'
+                     }
+                   })
 
       Exporter.new(export_directory, locale_path(:en), locale_path(:sk)).export
 
-      assert File.file?(exported_file("sk.csv")), "should write a file"
+      assert File.file?(exported_file('sk.csv')), 'should write a file'
 
-      data = read_csv_data(exported_file("sk.csv"))
-      assert_equal ['minister', 'min'], data['ministers.one']
+      data = read_csv_data(exported_file('sk.csv'))
+      assert_equal %w[minister min], data['ministers.one']
       assert_equal ['ministers', nil], data['ministers.other']
       assert_equal [nil, 'mini'], data['ministers.few']
     end
 
     test 'should allow for zero keys when detecting pluralization forms' do
       given_locale(:en, {
-        ministers: {
-          zero: 'no ministers',
-          one: 'minister',
-          other: 'ministers'
-        }
-      })
+                     ministers: {
+                       zero: 'no ministers',
+                       one: 'minister',
+                       other: 'ministers'
+                     }
+                   })
 
       Exporter.new(export_directory, locale_path(:en), locale_path(:uk)).export
 
-      assert File.file?(exported_file("uk.csv")), "should write a file"
+      assert File.file?(exported_file('uk.csv')), 'should write a file'
 
-      data = read_csv_data(exported_file("uk.csv"))
-      ['one', 'few', 'many', 'other'].each do |ukranian_plural_form|
-        assert data.has_key?("ministers.#{ukranian_plural_form}"), "expected plural form #{ukranian_plural_form} to be present, but it's not"
+      data = read_csv_data(exported_file('uk.csv'))
+      %w[one few many other].each do |ukranian_plural_form|
+        assert data.key?("ministers.#{ukranian_plural_form}"),
+               "expected plural form #{ukranian_plural_form} to be present, but it's not"
       end
     end
 
     test 'should leave keys alone if the hash doesn\'t look like it only contains pluralization forms' do
       given_locale(:en, {
-        ministers: {
-          one: 'minister',
-          other: 'ministers',
-          monkey: 'monkey'
-        }
-      })
+                     ministers: {
+                       one: 'minister',
+                       other: 'ministers',
+                       monkey: 'monkey'
+                     }
+                   })
 
       Exporter.new(export_directory, locale_path(:en), locale_path(:uk)).export
 
-      assert File.file?(exported_file("uk.csv")), "should write a file"
+      assert File.file?(exported_file('uk.csv')), 'should write a file'
 
-      data = read_csv_data(exported_file("uk.csv"))
-      ['few', 'many'].each do |ukranian_plural_form|
-        refute data.has_key?("ministers.#{ukranian_plural_form}"), "expected plural form #{ukranian_plural_form} to be missing, but it's present"
+      data = read_csv_data(exported_file('uk.csv'))
+      %w[few many].each do |ukranian_plural_form|
+        refute data.key?("ministers.#{ukranian_plural_form}"),
+               "expected plural form #{ukranian_plural_form} to be missing, but it's present"
       end
-      ['one', 'other', 'monkey'].each do |non_plural_forms|
-        assert data.has_key?("ministers.#{non_plural_forms}"), "expected non-plural form #{non_plural_forms} to be present, but it's not"
+      %w[one other monkey].each do |non_plural_forms|
+        assert data.key?("ministers.#{non_plural_forms}"),
+               "expected non-plural form #{non_plural_forms} to be present, but it's not"
       end
     end
 
-  private
+    private
 
     def read_csv_data(file)
       csv = CSV.read(file, headers: true)
-      csv.inject({}) { |h, row| h[row["key"]] = [row["source"], row["translation"]]; h }
+      csv.each_with_object({}) do |row, h|
+        h[row['key']] = [row['source'], row['translation']]
+      end
     end
 
     def given_locale(locale, keys)
-      File.open(locale_path(locale), "w") do |f|
-        f.puts({locale => keys}.to_yaml)
+      File.open(locale_path(locale), 'w') do |f|
+        f.puts({ locale => keys }.to_yaml)
       end
     end
 
@@ -227,12 +234,12 @@ module RailsTranslationManager
     def with_pluralization_forms(pluralizations)
       pluralizations.each do |locale, pluralization_forms|
         I18n.backend.store_translations(locale, {
-          'i18n' => {
-            'plural' => {
-              'keys' => pluralization_forms
-            }
-          }
-        })
+                                          'i18n' => {
+                                            'plural' => {
+                                              'keys' => pluralization_forms
+                                            }
+                                          }
+                                        })
       end
     end
   end

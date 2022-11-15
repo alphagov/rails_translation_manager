@@ -11,17 +11,17 @@ class AllLocales
   def generate
     paths = locale_file_paths.compact
 
-    raise NoLocaleFilesFound, "No locale files found for the supplied path" if paths.blank?
+    raise NoLocaleFilesFound, 'No locale files found for the supplied path' if paths.blank?
 
     paths.flat_map do |locale_group|
       {
         locale: locale_group[:locale],
-        keys: all_keys_for_locale(locale_group),
+        keys: all_keys_for_locale(locale_group)
       }
     end
   end
 
-private
+  private
 
   def locale_file_paths
     I18n.available_locales.map do |locale|
@@ -46,14 +46,14 @@ private
     keys = locale_hash.keys
 
     keys.reject! do |key|
-      key_chain && @skip_validation.map { |prefix|
+      key_chain && @skip_validation.map do |prefix|
         "#{key_chain}.#{key}".start_with? ".#{key_chain.split('.')[1]}.#{prefix}"
-      }.any?
+      end.any?
     end
 
     keys.each do |key|
       if locale_hash.fetch(key).is_a?(Hash)
-        keys_from_file(locale_hash: locale_hash.fetch(key), key_chain: "#{key_chain}.#{key}", locale_keys: locale_keys)
+        keys_from_file(locale_hash: locale_hash.fetch(key), key_chain: "#{key_chain}.#{key}", locale_keys:)
       else
         keys.each do |final_key|
           locale_keys << "#{key_chain}.#{final_key}"
@@ -62,7 +62,7 @@ private
     end
 
     # remove locale prefix from keys, e.g: ".en.browse.page" -> "browse.page"
-    locale_keys.uniq.map { |key| key.split(".")[2..].join(".") }
+    locale_keys.uniq.map { |key| key.split('.')[2..].join('.') }
   end
 
   class NoLocaleFilesFound < StandardError; end

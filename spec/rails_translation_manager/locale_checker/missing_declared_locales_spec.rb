@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require 'spec_helper'
 
 RSpec.describe MissingDeclaredLocales do
   let(:all_locales) do
@@ -16,20 +16,20 @@ RSpec.describe MissingDeclaredLocales do
     ]
   end
 
-  context "when there are missing locales" do
+  context 'when there are missing locales' do
     before do
-      I18n.available_locales = [:en, :CY, :pt]
+      I18n.available_locales = %i[en CY pt]
     end
 
-    it "outputs the missing locales" do
+    it 'outputs the missing locales' do
       expect(described_class.new(all_locales).report)
         .to eq(
           <<~OUTPUT.chomp
-          \e[31m[ERROR]\e[0m No locale files detected for:
+            \e[31m[ERROR]\e[0m No locale files detected for:
 
-          pt
+            pt
 
-          \e[1mEither create these locale files or remove these locales from your I18n `available_locales` config.\e[22m
+            \e[1mEither create these locale files or remove these locales from your I18n `available_locales` config.\e[22m
           OUTPUT
         )
     end
@@ -37,10 +37,10 @@ RSpec.describe MissingDeclaredLocales do
 
   context "when there aren't missing locales" do
     before do
-      I18n.available_locales = [:en, :cy]
+      I18n.available_locales = %i[en cy]
     end
 
-    it "outputs nil" do
+    it 'outputs nil' do
       expect(described_class.new(all_locales).report)
         .to be_nil
     end

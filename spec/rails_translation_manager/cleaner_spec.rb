@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 RSpec.describe RailsTranslationManager::Cleaner do
-
   before(:each) do
     FileUtils.cp('spec/locales/cleaner/with_whitespace.yml', 'tmp/')
   end

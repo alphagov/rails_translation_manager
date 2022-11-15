@@ -2,7 +2,6 @@
 
 module RailsTranslationManager
   class Cleaner
-
     def initialize(path)
       @path = path
     end

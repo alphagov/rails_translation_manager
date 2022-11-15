@@ -8,6 +8,6 @@ class BaseChecker
   end
 
   def report
-    raise "You must define a `report` method in the child class!"
+    raise 'You must define a `report` method in the child class!'
   end
 end

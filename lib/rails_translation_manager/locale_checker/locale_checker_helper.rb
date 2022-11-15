@@ -18,6 +18,6 @@ module LocaleCheckerHelper
   end
 
   def key_is_plural?(key)
-    PLURAL_KEYS.include?(key.split(".").last)
+    PLURAL_KEYS.include?(key.split('.').last)
   end
 end

@@ -57,7 +57,7 @@ class IncompatiblePlurals < BaseChecker
     group_by_parent_keys(keys).map do |plural_key_group|
       {
         parent: plural_key_group.first,
-        keys: plural_key_group.last.map { |key_chain| key_chain.split(".").last.to_sym }
+        keys: plural_key_group.last.map { |key_chain| key_chain.split('.').last.to_sym }
       }
     end
   end

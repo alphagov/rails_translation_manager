@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_translation_manager'
 
 module RailsTranslationManager
