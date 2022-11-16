@@ -38,6 +38,23 @@
   # Kazakh
   kk: { i18n: { plural: { keys: %i[one other], rule: ->(n) { n == 1 ? :one : :other } } } },
   # Pashto
+  # Maltese
+  mt: { i18n: { plural: { keys: %i[one few many other],
+                          rule:
+                            lambda do |n|
+                              n ||= 0
+                              mod100 = n % 100
+
+                              if n == 1
+                                :one
+                              elsif n.zero? || (2..10).to_a.include?(mod100)
+                                :few
+                              elsif (11..19).to_a.include?(mod100)
+                                :many
+                              else
+                                :other
+                              end
+                            end } } },
   ps: { i18n: { plural: { keys: %i[one other], rule: ->(n) { n == 1 ? :one : :other } } } },
   # Punjabi Shahmukhi
   "pa-pk": { i18n: { plural: { keys: %i[one other], rule: ->(n) { [0, 1].include?(n) ? :one : :other } } } },
@@ -57,6 +74,8 @@
   uz: { i18n: { plural: { keys: %i[one other], rule: ->(n) { n == 1 ? :one : :other } } } },
   # Yiddish
   yi: { i18n: { plural: { keys: %i[one other], rule: ->(n) { [0, 1].include?(n) ? :one : :other } } } },
+  # Chinese
+  zh: { i18n: { plural: { keys: %i[other], rule: ->(_) { :other } } } },
   # Chinese Hong Kong
   'zh-hk' => { i18n: { plural: { keys: %i[other], rule: -> { :other } } } },
   # Chinese Taiwan
