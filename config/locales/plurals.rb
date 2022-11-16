@@ -1,6 +1,19 @@
 # frozen_string_literal: true
 
 {
+  # Welsh
+  cy: { i18n: { plural: { keys: %i[zero one two few many other],
+                          rule:
+                            lambda do |n|
+                              case n
+                              when 0 then :zero
+                              when 1 then :one
+                              when 2 then :two
+                              when 3 then :few
+                              when 6 then :many
+                              else :other
+                              end
+                            end } } },
   # Dari - this isn't an iso code. Probably should be 'prs' as per ISO 639-3.
   dr: { i18n: { plural: { keys: %i[one other], rule: ->(n) { n == 1 ? :one : :other } } } },
   # Latin America and Caribbean Spanish
