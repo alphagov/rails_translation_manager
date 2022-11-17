@@ -1,3 +1,7 @@
+# Unreleased
+
+Enables extra plural rules to be used outside of Rails Translation Manager
+
 # 1.5.2
 
 Add missing plurals for Gujarati and Yiddish https://github.com/alphagov/rails_translation_manager/pull/44
