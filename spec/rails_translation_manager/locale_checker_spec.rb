@@ -4,6 +4,12 @@ require "spec_helper"
 
 RSpec.describe RailsTranslationManager::LocaleChecker do
   context "when the locales are valid" do
+    before do
+      I18n.backend.load_translations(
+        ["spec/locales/in_sync/cy/browse.yml", "spec/locales/in_sync/en/browse.yml"]
+      )
+    end
+
     it "calls each checker class" do
       described_class::CHECKER_CLASSES.each do |checker|
         expect_any_instance_of(checker).to receive(:report)
@@ -24,6 +30,12 @@ RSpec.describe RailsTranslationManager::LocaleChecker do
   end
 
   context "when the locales are not valid" do
+    before do
+      I18n.backend.load_translations(
+        ["spec/locales/out_of_sync/cy.yml", "spec/locales/out_of_sync/en.yml"]
+      )
+    end
+
     it "calls each checker class" do
       described_class::CHECKER_CLASSES.each do |checker|
         expect_any_instance_of(checker).to receive(:report)

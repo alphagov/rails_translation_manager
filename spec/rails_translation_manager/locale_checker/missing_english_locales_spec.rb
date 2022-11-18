@@ -4,6 +4,12 @@ require "spec_helper"
 
 RSpec.describe MissingEnglishLocales do
   context "where there are missing English locales" do
+    before do
+      I18n.backend.store_translations :en, { browse: { same_key: "value" } }
+      I18n.backend.store_translations :cy, { browse: { same_key: "value" } }
+      I18n.backend.store_translations :cy, { browse: { extra_key: "extra_key" } }
+    end
+
     let(:all_locales) do
       [
         {
@@ -31,6 +37,11 @@ RSpec.describe MissingEnglishLocales do
   end
 
   context "where there aren't missing English locales" do
+    before do
+      I18n.backend.store_translations :en, { browse: { same_key: "value" } }
+      I18n.backend.store_translations :cy, { browse: { same_key: "value" } }
+    end
+
     let(:all_locales) do
       [
         {

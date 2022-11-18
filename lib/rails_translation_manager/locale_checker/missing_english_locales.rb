@@ -20,12 +20,16 @@ class MissingEnglishLocales < BaseChecker
   end
 
   def missing_english_locales
-    all_locales.each_with_object({}) do |locale, hsh|
-      missing_keys = exclude_plurals(locale[:keys]) - english_keys_excluding_plurals(all_locales)
+    all_locales.each_with_object({}) do |group, hsh|
+      next if group[:locale] == :en
+
+      keys = exclude_plurals(group[:keys])
+
+      missing_keys = keys.reject { |key| I18n.exists?(key) }
 
       next if missing_keys.blank?
 
-      hsh[locale[:locale]] = missing_keys
+      hsh[group[:locale]] = missing_keys
     end
   end
 end
