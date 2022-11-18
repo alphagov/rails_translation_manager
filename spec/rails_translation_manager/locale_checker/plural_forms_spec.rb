@@ -21,6 +21,9 @@ RSpec.describe PluralForms do
     end
 
     it "returns nil for associated locales" do
+      # clears any in-memory translations
+      I18n.backend.reload!
+
       expect(described_class.all).to include({ cy: nil, en: nil })
     end
   end
