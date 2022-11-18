@@ -15,7 +15,8 @@ RSpec.describe RailsTranslationManager::LocaleChecker do
         expect_any_instance_of(checker).to receive(:report)
       end
 
-      described_class.new("spec/locales/in_sync/**/*.yml").validate_locales
+      expect { described_class.new("spec/locales/in_sync/**/*.yml").validate_locales }
+        .to output.to_stdout
     end
 
     it "outputs a confirmation" do
@@ -24,6 +25,8 @@ RSpec.describe RailsTranslationManager::LocaleChecker do
     end
 
     it "returns true" do
+      allow($stdout).to receive(:puts)
+
       expect(described_class.new("spec/locales/in_sync/**/*.yml").validate_locales)
         .to eq(true)
     end
@@ -41,38 +44,33 @@ RSpec.describe RailsTranslationManager::LocaleChecker do
         expect_any_instance_of(checker).to receive(:report)
       end
 
-      described_class.new("spec/locales/out_of_sync/*.yml").validate_locales
+      expect { described_class.new("spec/locales/out_of_sync/*.yml").validate_locales }
+        .to output.to_stdout
     end
 
     it "outputs the report" do
-      printed = capture_stdout do
-        described_class.new("spec/locales/out_of_sync/*.yml").validate_locales
-      end
-
-      expect(printed.scan(/\[ERROR\]/).count).to eq(3)
+      # expect output to contain 3 errors ([ERROR])
+      expect { described_class.new("spec/locales/out_of_sync/*.yml").validate_locales }
+        .to output(/(?:\[ERROR\](?:.|\n)*){3}/).to_stdout
     end
 
     it "returns false" do
+      allow($stdout).to receive(:puts)
+
       expect(described_class.new("spec/locales/out_of_sync/*.yml").validate_locales)
         .to eq(false)
     end
   end
 
   context "when the locale path doesn't relate to any YAML files" do
-    it "doesn't call any checker classes" do
-      described_class::CHECKER_CLASSES.each do |checker|
-        expect_any_instance_of(checker).to_not receive(:report)
-      end
-
-      described_class.new("some/random/path").validate_locales
-    end
-
     it "outputs an error message" do
       expect { described_class.new("some/random/path").validate_locales }
         .to output("No locale files found for the supplied path\n").to_stdout
     end
 
     it "returns false" do
+      allow($stdout).to receive(:puts)
+
       expect(described_class.new("some/random/path").validate_locales)
         .to eq(false)
     end
