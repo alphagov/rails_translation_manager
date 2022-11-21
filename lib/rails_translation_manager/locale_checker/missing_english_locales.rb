@@ -13,10 +13,10 @@ class MissingEnglishLocales < BaseChecker
 
   def format_missing_english_locales(keys)
     formatted_keys = keys.to_a.map do |group|
-      "\e[1mMissing English keys:\e[22m #{group[0]}\n\e[1mFound in:\e[22m #{group[1]}"
+      "\e[1mMissing English locales:\e[22m #{group[0]}\n\e[1mFound in:\e[22m #{group[1]}"
     end
 
-    "\e[31m[ERROR]\e[0m Missing English locales, either remove these keys from the foreign locales or add them to the English locales\n\n#{formatted_keys.join("\n\n")}"
+    "\e[31m[ERROR]\e[0m Missing English locales, either remove them from the foreign locale files or add them to the English locale files\n\n#{formatted_keys.join("\n\n")}"
   end
 
   def missing_english_locales
