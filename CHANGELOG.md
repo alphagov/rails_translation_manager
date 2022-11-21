@@ -1,3 +1,7 @@
+# Unreleased
+
+Update plural file loading https://github.com/alphagov/rails_translation_manager/pull/52
+
 # 1.5.2
 
 Add missing plurals for Gujarati and Yiddish https://github.com/alphagov/rails_translation_manager/pull/44
