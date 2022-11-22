@@ -25,10 +25,9 @@ RSpec.describe RailsTranslationManager::LocaleChecker do
     end
 
     it "returns true" do
-      allow($stdout).to receive(:puts)
-
-      expect(described_class.new("spec/locales/in_sync/**/*.yml").validate_locales)
-        .to eq(true)
+      outcome = nil
+      expect { outcome = described_class.new("spec/locales/in_sync/**/*.yml").validate_locales }.to output.to_stdout
+      expect(outcome).to be(true)
     end
   end
 
@@ -55,10 +54,9 @@ RSpec.describe RailsTranslationManager::LocaleChecker do
     end
 
     it "returns false" do
-      allow($stdout).to receive(:puts)
-
-      expect(described_class.new("spec/locales/out_of_sync/*.yml").validate_locales)
-        .to eq(false)
+      outcome = nil
+      expect { outcome = described_class.new("spec/locales/out_of_sync/*.yml").validate_locales }.to output.to_stdout
+      expect(outcome).to be(false)
     end
   end
 
@@ -69,10 +67,9 @@ RSpec.describe RailsTranslationManager::LocaleChecker do
     end
 
     it "returns false" do
-      allow($stdout).to receive(:puts)
-
-      expect(described_class.new("some/random/path").validate_locales)
-        .to eq(false)
+      outcome = nil
+      expect { outcome = described_class.new("some/random/path").validate_locales }.to output.to_stdout
+      expect(outcome).to be(false)
     end
   end
 end

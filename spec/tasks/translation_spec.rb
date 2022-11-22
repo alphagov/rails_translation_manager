@@ -20,7 +20,7 @@ describe "rake tasks" do
     end
 
     it "calls the Importer class with the csv and import paths" do
-      task.execute(csv_path: csv_path)
+      expect { task.execute(csv_path: csv_path) }.to output.to_stdout
 
       expect(RailsTranslationManager::Importer)
         .to have_received(:new)
@@ -44,7 +44,10 @@ describe "rake tasks" do
     end
 
     it "calls the importer class for each target path" do
-      task.execute(csv_directory: csv_directory, multiple_files_per_language: true)
+      expect { task.execute(csv_directory: csv_directory, multiple_files_per_language: true) }
+        .to output
+        .to_stdout
+
       import_paths = Dir["spec/locales/importer/*.csv"]
 
       import_paths.each do |csv_path|
