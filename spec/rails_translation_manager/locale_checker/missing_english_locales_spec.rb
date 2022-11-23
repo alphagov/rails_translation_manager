@@ -4,6 +4,12 @@ require "spec_helper"
 
 RSpec.describe MissingEnglishLocales do
   context "where there are missing English locales" do
+    before do
+      I18n.backend.store_translations :en, { browse: { same_key: "value" } }
+      I18n.backend.store_translations :cy, { browse: { same_key: "value" } }
+      I18n.backend.store_translations :cy, { browse: { extra_key: "extra_key" } }
+    end
+
     let(:all_locales) do
       [
         {
@@ -21,9 +27,9 @@ RSpec.describe MissingEnglishLocales do
       expect(described_class.new(all_locales).report)
         .to eq(
           <<~OUTPUT.chomp
-            \e[31m[ERROR]\e[0m Missing English locales, either remove these keys from the foreign locales or add them to the English locales
+            \e[31m[ERROR]\e[0m Missing English locales, either remove them from the foreign locale files or add them to the English locale files
 
-            \e[1mMissing English keys:\e[22m ["browse.extra_key"]
+            \e[1mMissing English locales:\e[22m ["browse.extra_key"]
             \e[1mFound in:\e[22m [:cy]
           OUTPUT
         )
@@ -31,6 +37,11 @@ RSpec.describe MissingEnglishLocales do
   end
 
   context "where there aren't missing English locales" do
+    before do
+      I18n.backend.store_translations :en, { browse: { same_key: "value" } }
+      I18n.backend.store_translations :cy, { browse: { same_key: "value" } }
+    end
+
     let(:all_locales) do
       [
         {
