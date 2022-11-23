@@ -2,6 +2,9 @@
 
 Update plural file loading https://github.com/alphagov/rails_translation_manager/pull/52
 Update missing English keys checker https://github.com/alphagov/rails_translation_manager/pull/53
+Add missing plurals for Welsh, Maltese and Hong Kong Chinese.
+* https://github.com/alphagov/rails_translation_manager/pull/49
+* https://github.com/alphagov/rails_translation_manager/pull/50
 
 # 1.5.2
 
