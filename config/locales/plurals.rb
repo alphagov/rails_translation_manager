@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 {
+  # Azerbaijani
+  az: { i18n: { plural: { keys: %i[one other], rule: ->(n) { n == 1 ? :one : :other } } } },
   # Welsh
   cy: { i18n: { plural: { keys: %i[zero one two few many other],
                           rule:
@@ -18,6 +20,8 @@
   dr: { i18n: { plural: { keys: %i[one other], rule: ->(n) { n == 1 ? :one : :other } } } },
   # Latin America and Caribbean Spanish
   "es-419": { i18n: { plural: { keys: %i[one other], rule: ->(n) { n == 1 ? :one : :other } } } },
+  # Persian
+  fa: { i18n: { plural: { keys: %i[one other], rule: ->(n) { [0, 1].include?(n) ? :one : :other } } } },
   # Gujarati
   gu: { i18n: { plural: { keys: %i[one other], rule: ->(n) { [0, 1].include?(n) ? :one : :other } } } },
   # Scottish Gaelic
@@ -37,7 +41,6 @@
   hy: { i18n: { plural: { keys: %i[one other], rule: ->(n) { [0, 1].include?(n) ? :one : :other } } } },
   # Kazakh
   kk: { i18n: { plural: { keys: %i[one other], rule: ->(n) { n == 1 ? :one : :other } } } },
-  # Pashto
   # Maltese
   mt: { i18n: { plural: { keys: %i[one few many other],
                           rule:
@@ -55,9 +58,10 @@
                                 :other
                               end
                             end } } },
-  ps: { i18n: { plural: { keys: %i[one other], rule: ->(n) { n == 1 ? :one : :other } } } },
   # Punjabi Shahmukhi
   "pa-pk": { i18n: { plural: { keys: %i[one other], rule: ->(n) { [0, 1].include?(n) ? :one : :other } } } },
+  # Pashto
+  ps: { i18n: { plural: { keys: %i[one other], rule: ->(n) { n == 1 ? :one : :other } } } },
   # Sinhalese
   si: { i18n: { plural: { keys: %i[one other], rule: ->(n) { [0, 1].include?(n) ? :one : :other } } } },
   # Somali
@@ -73,11 +77,11 @@
   # Uzbek
   uz: { i18n: { plural: { keys: %i[one other], rule: ->(n) { n == 1 ? :one : :other } } } },
   # Yiddish
-  yi: { i18n: { plural: { keys: %i[one other], rule: ->(n) { [0, 1].include?(n) ? :one : :other } } } },
+  yi: { i18n: { plural: { keys: %i[one other], rule: ->(n) { n == 1 ? :one : :other } } } },
   # Chinese
-  zh: { i18n: { plural: { keys: %i[other], rule: ->(_) { :other } } } },
+  zh: { i18n: { plural: { keys: %i[other], rule: -> { :other } } } },
   # Chinese Hong Kong
-  'zh-hk' => { i18n: { plural: { keys: %i[other], rule: -> { :other } } } },
+  "zh-hk": { i18n: { plural: { keys: %i[other], rule: -> { :other } } } },
   # Chinese Taiwan
-  'zh-tw' => { i18n: { plural: { keys: %i[other], rule: -> { :other } } } }
+  "zh-tw": { i18n: { plural: { keys: %i[other], rule: -> { :other } } } }
 }
