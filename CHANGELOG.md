@@ -1,3 +1,7 @@
+# Unreleased
+
+Audits plural rules and ensures consistent formatting https://github.com/alphagov/rails_translation_manager/pull/57
+
 # 1.6.0
 
 Update plural file loading https://github.com/alphagov/rails_translation_manager/pull/52
