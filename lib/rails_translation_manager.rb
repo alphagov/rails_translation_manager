@@ -20,14 +20,6 @@ require "rails_translation_manager/exporter"
 require "rails_translation_manager/importer"
 
 module RailsTranslationManager
-  rails_translation_manager = Gem::Specification.find_by_name("rails_translation_manager").gem_dir
-  I18n.load_path += ["#{rails_translation_manager}/config/locales/plurals.rb"]
-
-  if ENV["RAILS_TRANSLATION_MANAGER_LOAD_ALL_PLURAL_RULES"]
-    rails_i18n_path = Gem::Specification.find_by_name("rails-i18n").gem_dir
-    I18n.load_path += Dir["#{rails_i18n_path}/rails/pluralization/*.rb"]
-  end
-
   def self.locale_root
     if ENV["RAILS_TRANSLATION_MANAGER_LOCALE_ROOT"]
       Pathname.new(ENV["RAILS_TRANSLATION_MANAGER_LOCALE_ROOT"])
