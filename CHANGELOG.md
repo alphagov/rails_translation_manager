@@ -1,3 +1,7 @@
+# 1.6.2
+
+* Load plural rules after initialising app https://github.com/alphagov/rails_translation_manager/pull/61
+
 # 1.6.1
 
 * Audits plural rules and ensures consistent formatting https://github.com/alphagov/rails_translation_manager/pull/57
