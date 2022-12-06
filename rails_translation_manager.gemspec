@@ -6,8 +6,8 @@ require 'rails_translation_manager/version'
 Gem::Specification.new do |spec|
   spec.name          = "rails_translation_manager"
   spec.version       = RailsTranslationManager::VERSION
-  spec.authors       = ["Edd Sowden"]
-  spec.email         = ["edd.sowden@digital.cabinet-office.gov.uk"]
+  spec.authors       = ["GOV.UK Dev"]
+  spec.email         = ["govuk-dev@digital.cabinet-office.gov.uk"]
   spec.summary       = %q{Tasks to manage translation files}
   spec.description   = ""
   spec.homepage      = ""
