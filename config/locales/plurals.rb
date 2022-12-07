@@ -79,9 +79,9 @@
   # Yiddish
   yi: { i18n: { plural: { keys: %i[one other], rule: ->(n) { n == 1 ? :one : :other } } } },
   # Chinese
-  zh: { i18n: { plural: { keys: %i[other], rule: -> { :other } } } },
+  zh: { i18n: { plural: { keys: %i[other], rule: proc { :other } } } },
   # Chinese Hong Kong
-  "zh-hk": { i18n: { plural: { keys: %i[other], rule: -> { :other } } } },
+  "zh-hk": { i18n: { plural: { keys: %i[other], rule: proc { :other } } } },
   # Chinese Taiwan
-  "zh-tw": { i18n: { plural: { keys: %i[other], rule: -> { :other } } } }
+  "zh-tw": { i18n: { plural: { keys: %i[other], rule: proc { :other } } } }
 }

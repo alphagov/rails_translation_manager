@@ -1,3 +1,7 @@
+# 1.6.3
+
+* Use proc for single plural languages https://github.com/alphagov/rails_translation_manager/pull/62
+
 # 1.6.2
 
 * Load plural rules after initialising app https://github.com/alphagov/rails_translation_manager/pull/61
