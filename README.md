@@ -63,4 +63,4 @@ Read [why we architected RTM in this way](https://docs.google.com/document/d/1ba
 
 ## Licence
 
-[MIT License](LICENSE.txt)
+[MIT License](LICENCE)
