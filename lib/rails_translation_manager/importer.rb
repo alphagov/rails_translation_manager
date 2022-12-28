@@ -73,7 +73,7 @@ class RailsTranslationManager::Importer
     group_csv_by_file(csv).each do |group|
       language_dir =  File.join(import_directory, locale)
 
-      Dir.mkdir(language_dir) unless Dir.exists?(language_dir)
+      Dir.mkdir(language_dir) unless Dir.exist?(language_dir)
 
       import_yml_path = File.join(import_directory, locale, "#{group[0]}.yml")
       import_csv(group[1], import_yml_path)
