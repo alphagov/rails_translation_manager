@@ -42,11 +42,21 @@ rake translation:normalize
 
 Remove keys that are not used anywhere in your application:
 
+**Warning**:
+> Removing unused keys may remove keys that actually _are_ used by your
+  application. This happens when RTM fails to scan certain keys in the
+  codebase, e.g when the keys are referenced dynamically. You can make RTM
+  ignore these keys by creating a `/config/i18n-tasks.yml` file with an
+  `ignore_unused` key.
+
+  A safer way to remove known unused keys is to use the [Delete keys](https://github.com/glebm/i18n-tasks#delete-keys)
+  command.
+
 ```
 rake translation:remove_unused
 ```
 
-Sometimes RTM might remove keys that actually _are_ used by your application. This happens when the keys are referenced dynamically. You can make RTM ignore these keys by creating a `/config/i18n-tasks.yml` file with an `ignore_unused` key. For example:
+Example `ignore_unused` config:
 
 ```yaml
 ignore_unused:
