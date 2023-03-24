@@ -1,3 +1,7 @@
+# Unreleased
+
+* Drop support for Ruby 2.7.
+
 # 1.6.3
 
 * Use proc for single plural languages https://github.com/alphagov/rails_translation_manager/pull/62
