@@ -95,7 +95,7 @@ module RailsTranslationManager
 
       data = read_csv_data(exported_file("fr.csv"))
       assert_equal ["French", nil], data["language_names.fr"]
-      assert_equal nil, data["language_names.es"], "language key for spanish should not be present"
+      assert_nil data["language_names.es"], "language key for spanish should not be present"
     end
 
     test 'should export correct pluralization forms for target' do

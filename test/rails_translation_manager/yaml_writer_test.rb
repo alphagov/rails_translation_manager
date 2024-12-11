@@ -35,7 +35,7 @@ module RailsTranslationManager
 
       DummyWriter.new.write_yaml(output_file, data)
 
-      assert_match /\n$/, File.readlines(output_file).last
+      assert_match (/\n$/), File.readlines(output_file).last
     end
 
     test 'strips whitespace from the end of lines for consistency with code editors' do
