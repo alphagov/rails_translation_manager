@@ -1,4 +1,4 @@
-# Unreleased
+# 1.8.0
 
 * Drop support for Ruby 3.1, keep supporting Ruby 3.2, use Ruby 3.3 as default https://github.com/alphagov/rails_translation_manager/pull/78 
 
